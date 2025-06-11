@@ -56,7 +56,9 @@ CREATE TABLE `check_table` (
   KEY `FK_Check_Employee` (`id_employee`),
   KEY `FK_Check_Customer_Card` (`card_number`),
   CONSTRAINT `FK_Check_Customer_Card` FOREIGN KEY (`card_number`) REFERENCES `customer_card` (`card_number`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `FK_Check_Employee` FOREIGN KEY (`id_employee`) REFERENCES `employee` (`id_employee`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `FK_Check_Employee` FOREIGN KEY (`id_employee`) REFERENCES `employee` (`id_employee`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `CHK_Check_Sum_Positive` CHECK ((`sum_total` >= 0)),
+  CONSTRAINT `CHK_Check_VAT_Positive` CHECK ((`vat` >= 0))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -86,7 +88,8 @@ CREATE TABLE `customer_card` (
   `street` varchar(50) DEFAULT NULL,
   `zip_code` varchar(9) DEFAULT NULL,
   `percent` int NOT NULL,
-  PRIMARY KEY (`card_number`)
+  PRIMARY KEY (`card_number`),
+  CONSTRAINT `CHK_Customer_Percent_Positive` CHECK ((`percent` >= 0))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -119,7 +122,8 @@ CREATE TABLE `employee` (
   `city` varchar(50) DEFAULT NULL,
   `street` varchar(50) DEFAULT NULL,
   `zip_code` varchar(9) DEFAULT NULL,
-  PRIMARY KEY (`id_employee`)
+  PRIMARY KEY (`id_employee`),
+  CONSTRAINT `CHK_Employee_Salary_Positive` CHECK ((`salary` >= 0))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -174,7 +178,9 @@ CREATE TABLE `sale` (
   PRIMARY KEY (`UPC`,`check_number`),
   KEY `FK_Sale_Check` (`check_number`),
   CONSTRAINT `FK_Sale_Check` FOREIGN KEY (`check_number`) REFERENCES `check_table` (`check_number`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_Sale_Store_Product` FOREIGN KEY (`UPC`) REFERENCES `store_product` (`UPC`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_Sale_Store_Product` FOREIGN KEY (`UPC`) REFERENCES `store_product` (`UPC`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `CHK_Sale_Number_Positive` CHECK ((`product_number` >= 0)),
+  CONSTRAINT `CHK_Sale_Price_Positive` CHECK ((`selling_price` >= 0))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -205,7 +211,9 @@ CREATE TABLE `store_product` (
   KEY `FK_Store_Product_Product` (`id_product`),
   KEY `FK_Store_Product_UPC_Prom` (`UPC_prom`),
   CONSTRAINT `FK_Store_Product_Product` FOREIGN KEY (`id_product`) REFERENCES `product` (`id_product`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `FK_Store_Product_UPC_Prom` FOREIGN KEY (`UPC_prom`) REFERENCES `store_product` (`UPC`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `FK_Store_Product_UPC_Prom` FOREIGN KEY (`UPC_prom`) REFERENCES `store_product` (`UPC`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `CHK_Store_Product_Number_Positive` CHECK ((`products_number` >= 0)),
+  CONSTRAINT `CHK_Store_Product_Price_Positive` CHECK ((`selling_price` >= 0))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -227,4 +235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-11 15:30:56
+-- Dump completed on 2025-06-11 22:34:55
