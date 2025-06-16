@@ -4,9 +4,9 @@ import com.example.constants.Attribute;
 import com.example.constants.ServletPath;
 import com.example.controller.command.Command;
 import com.example.exception.ServiceException;
-import com.example.utils.CommandKeyGenerator;
-import com.example.utils.HttpWrapper;
-import com.example.utils.RedirectionManager;
+import com.example.controller.utils.CommandKeyGenerator;
+import com.example.controller.utils.HttpWrapper;
+import com.example.controller.utils.RedirectionManager;
 
 import org.apache.log4j.Logger;
 

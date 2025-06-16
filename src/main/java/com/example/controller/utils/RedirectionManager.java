@@ -1,4 +1,4 @@
-package com.example.utils;
+package com.example.controller.utils;
 
 import com.example.exception.ServerException;
 import com.example.locale.MessageUtils;
