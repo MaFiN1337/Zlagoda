@@ -2,6 +2,8 @@ package com.example.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Check {
@@ -9,9 +11,18 @@ public class Check {
     private LocalDateTime print_date;
     private BigDecimal sum_total;
     private BigDecimal vat;
+    private Employee employee;
+    private Customer_card customer_card;
+
+    private List<Store_product> storeProducts = new ArrayList<>();
 
     public Check() {
 
+    }
+
+    public Store_product addStoreProduct(Store_product storeProduct){
+        storeProducts.add(storeProduct);
+        return storeProduct;
     }
 
     public static class Builder implements IBuilder<Check> {
@@ -35,6 +46,22 @@ public class Check {
 
         public Check.Builder setVat(BigDecimal vat) {
             check.vat = vat;
+            return this;
+        }
+
+        public Check.Builder setEmployee(Employee employee) {
+            check.employee = employee;
+            return this;
+        }
+
+        public Check.Builder setCustomer_card(Customer_card customer_card) {
+            check.customer_card = customer_card;
+            return this;
+        }
+
+        public Check.Builder setStoreProducts(List<Store_product> storeProducts){
+            check.storeProducts = new ArrayList<>();
+            check.storeProducts.addAll(storeProducts);
             return this;
         }
 
@@ -77,6 +104,30 @@ public class Check {
         this.vat = vat;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Customer_card getCustomer_card() {
+        return customer_card;
+    }
+
+    public void setCustomer_card(Customer_card customer_card) {
+        this.customer_card = customer_card;
+    }
+
+    public List<Store_product> getStoreProducts() {
+        return storeProducts;
+    }
+
+    public void setStoreProducts(List<Store_product> storeProducts) {
+        this.storeProducts = new ArrayList<>();
+        this.storeProducts.addAll(storeProducts);
+    }
 
     @Override
     public int hashCode() {
@@ -104,8 +155,10 @@ public class Check {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Check [number=").append(number).append(", print date=").append(print_date)
-                .append(", sum total=").append(sum_total).append(", vat=").append(vat).append("]");
+        builder.append("Check [number=").append(number).append(", print_date=").append(print_date)
+                .append(", sum_total=").append(sum_total).append(", vat=").append(vat)
+                .append(", employee=").append(employee).append(", customer_card=").append(customer_card)
+                .append(", store_products=").append(storeProducts).append("]");
         return builder.toString();
     }
 }

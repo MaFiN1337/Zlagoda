@@ -5,10 +5,11 @@ import java.util.Objects;
 
 public class Store_product {
     private String upc;
-    private String upc_prom;
     private BigDecimal selling_price;
     private int products_number;
     private boolean promotional_product;
+    private Store_product upc_prom;
+    private Product product;
 
     public Store_product() { }
 
@@ -21,7 +22,7 @@ public class Store_product {
             return this;
         }
 
-        public Store_product.Builder setUpc_prom(String upc_prom) {
+        public Store_product.Builder setUpc_prom(Store_product upc_prom) {
             store_product.upc_prom = upc_prom;
             return this;
         }
@@ -41,6 +42,11 @@ public class Store_product {
             return this;
         }
 
+        public Store_product.Builder setProduct(Product product) {
+            store_product.product = product;
+            return this;
+        }
+
         @Override
         public Store_product build() {
             return store_product;
@@ -55,11 +61,11 @@ public class Store_product {
         this.upc = upc;
     }
 
-    public String getUpc_prom() {
+    public Store_product getUpc_prom() {
         return upc_prom;
     }
 
-    public void setUpc_prom(String upc_prom) {
+    public void setUpc_prom(Store_product upc_prom) {
         this.upc_prom = upc_prom;
     }
 
@@ -85,6 +91,14 @@ public class Store_product {
 
     public void setPromotional_product(boolean promotional_product) {
         this.promotional_product = promotional_product;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override

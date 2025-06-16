@@ -230,7 +230,7 @@ public class Employee {
         StringBuilder builder = new StringBuilder();
         builder.append("Employee [id=").append(id).append(", name=").append(name).append(", surname=").append(surname)
                 .append(", patronymic=").append(patronymic).append(", role=").append(role).append(", salary=").append(salary)
-                .append(", date of birth=").append(date_of_birth).append(", date of start=").append(date_of_start)
+                .append(", date_of_birth=").append(date_of_birth).append(", date_of_start=").append(date_of_start)
                 .append(", phone=").append(phone).append(", city=").append(city)
                 .append(", street=").append(street).append(", zip_code=").append(zip_code).append("]");
         return builder.toString();

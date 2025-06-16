@@ -3,7 +3,7 @@ package com.example.entity;
 import java.util.Objects;
 
 public class Product {
-    private int id;
+    private Long id;
     private String name;
     private String characteristics;
     private Category category;
@@ -16,7 +16,7 @@ public class Product {
 
         private Product product = new Product();
 
-        public Product.Builder setId(int id) {
+        public Product.Builder setId(Long id) {
             product.id = id;
             return this;
         }
@@ -43,11 +43,11 @@ public class Product {
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -102,7 +102,8 @@ public class Product {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Product [id=").append(id).append(", name=").append(name)
-                .append(", characteristics=").append(characteristics).append("]");
+                .append(", characteristics=").append(characteristics)
+                .append(", category=").append(category).append("]");
         return builder.toString();
     }
 }
