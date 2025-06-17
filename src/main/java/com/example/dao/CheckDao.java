@@ -1,7 +1,9 @@
 package com.example.dao;
 
 import com.example.entity.Check;
+import com.example.entity.Store_product;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,6 +26,6 @@ public interface CheckDao extends GenericDao<Check, String>, AutoCloseable{
 
     Long searchSumOfChecksPerPeriod(LocalDate fromDate, LocalDate toDate);
 
-
+    BigDecimal searchAmountOfStoreProductsPerPeriod(Store_product storeProduct, LocalDate fromDate, LocalDate toDate);
 
 }

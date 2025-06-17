@@ -19,7 +19,7 @@ ORDER BY category_name;
 SELECT * FROM Product
 ORDER BY product_name;
 
--- 10. Отримати інформацію про усі товари у магазині, відсортовані за кількістю
+-- 10. Отримати інформацію про усі товари у магазині, відсортовані за кількістю      !!!   ГОТОВО !!!
 SELECT * FROM Store_Product
 ORDER BY products_number;
 
@@ -41,32 +41,33 @@ WHERE c.category_name = 'Назва_категорії'
 ORDER BY p.product_name;
 
 -- 14. За UPC-товару знайти ціну продажу товару, кількість наявних одиниць товару, назву та характеристики товару
+           --                                                                                 !!!   ГОТОВО !!!
 SELECT sp.selling_price, sp.products_number, p.product_name, p.characteristics
 FROM Store_Product sp
 JOIN Product p ON sp.id_product = p.id_product
 WHERE sp.UPC = 'UPC_код';
 
 -- 15. Отримати інформацію про усі акційні товари, відсортовані за кількістю одиниць товару/за назвою
--- За кількістю:
+-- За кількістю:                                                                    !!!   ГОТОВО !!!
 SELECT sp.*, p.product_name FROM Store_Product sp
 JOIN Product p ON sp.id_product = p.id_product
 WHERE sp.promotional_product = TRUE
 ORDER BY sp.products_number;
 
--- За назвою:
+-- За назвою:                                                          !!!   ГОТОВО !!!
 SELECT sp.*, p.product_name FROM Store_Product sp
 JOIN Product p ON sp.id_product = p.id_product
 WHERE sp.promotional_product = TRUE
 ORDER BY p.product_name;
 
 -- 16. Отримати інформацію про усі не акційні товари, відсортовані за кількістю одиниць товару/за назвою
--- За кількістю:
+-- За кількістю:                                                       !!!   ГОТОВО !!!
 SELECT sp.*, p.product_name FROM Store_Product sp
 JOIN Product p ON sp.id_product = p.id_product
 WHERE sp.promotional_product = FALSE OR sp.promotional_product IS NULL
 ORDER BY sp.products_number;
 
--- За назвою:
+-- За назвою:                                                       !!!   ГОТОВО !!!
 SELECT sp.*, p.product_name FROM Store_Product sp
 JOIN Product p ON sp.id_product = p.id_product
 WHERE sp.promotional_product = FALSE OR sp.promotional_product IS NULL
@@ -105,12 +106,12 @@ SELECT SUM(c.sum_total) as total_sales
 FROM Check c
 WHERE c.print_date BETWEEN '2024-01-01' AND '2024-12-31';
 
--- 21. Визначити загальну кількість одиниць певного товару, проданого за певний період часу
+-- 21. Визначити загальну кількість одиниць певного товару, проданого за певний період часу              !!!   ГОТОВО !!!
 SELECT SUM(s.product_number) as total_quantity
 FROM Sale s
 JOIN Check c ON s.check_number = c.check_number
 JOIN Store_Product sp ON s.UPC = sp.UPC
-JOIN Product p ON sp.id_product = p.id_product
+JOIN Product p ON sp.id_product = p.id_product         --  НЕПРАВИЛЬНИЙ ЗАПИТ
 WHERE p.product_name = 'Назва_товару'
   AND c.print_date BETWEEN '2024-01-01' AND '2024-12-31';
 
@@ -120,7 +121,7 @@ WHERE p.product_name = 'Назва_товару'
 SELECT * FROM Product
 ORDER BY product_name;
 
--- 2. Отримати інформацію про усі товари у магазині, відсортовані за назвою
+-- 2. Отримати інформацію про усі товари у магазині, відсортовані за назвою              !!!   ГОТОВО !!!
 SELECT sp.*, p.product_name FROM Store_Product sp
 JOIN Product p ON sp.id_product = p.id_product
 ORDER BY p.product_name;
@@ -186,19 +187,19 @@ LEFT JOIN Store_Product sp ON s.UPC = sp.UPC
 LEFT JOIN Product p ON sp.id_product = p.id_product
 WHERE c.check_number = 'номер_чеку';
 
--- 12. Отримати інформацію про усі акційні товари (дублікат запиту 15)
+-- 12. Отримати інформацію про усі акційні товари (дублікат запиту 15)              !!!   ГОТОВО !!!
 SELECT sp.*, p.product_name FROM Store_Product sp
 JOIN Product p ON sp.id_product = p.id_product
 WHERE sp.promotional_product = TRUE
 ORDER BY sp.products_number;
 
--- 13. Отримати інформацію про усі не акційні товари (дублікат запиту 16)
+-- 13. Отримати інформацію про усі не акційні товари (дублікат запиту 16)            !!!   ГОТОВО !!!
 SELECT sp.*, p.product_name FROM Store_Product sp
 JOIN Product p ON sp.id_product = p.id_product
 WHERE sp.promotional_product = FALSE OR sp.promotional_product IS NULL
 ORDER BY sp.products_number;
 
--- 14. За UPC-товару знайти ціну продажу товару, кількість наявних одиниць товару (дублікат запиту 14)
+-- 14. За UPC-товару знайти ціну продажу товару, кількість наявних одиниць товару (дублікат запиту 14)   !!!   ГОТОВО !!!
 SELECT selling_price, products_number
 FROM Store_Product
 WHERE UPC = 'UPC_код';
