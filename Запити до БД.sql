@@ -1,31 +1,6 @@
--- 5. Отримати інформацію про усіх працівників, відсортованих за прізвищем        !!!   ГОТОВО !!!
-SELECT * FROM Employee
-ORDER BY empl_surname;
-
--- 6. Отримати інформацію про усіх працівників, що займають посаду касира, відсортованих за прізвищем  !!!   ГОТОВО !!!
-SELECT * FROM Employee
-WHERE empl_role = 'касир'
-ORDER BY empl_surname;
-
--- 7. Отримати інформацію про усіх постійних клієнтів, відсортованих за прізвищем   !!!   ГОТОВО !!!
-SELECT * FROM Customer_Card
-ORDER BY cust_surname;
-
 -- 10. Отримати інформацію про усі товари у магазині, відсортовані за кількістю      !!!   ГОТОВО !!!
 SELECT * FROM Store_Product
 ORDER BY products_number;
-
--- 11. За прізвищем працівника знайти його телефон та адресу                         !!!   ГОТОВО !!!
-SELECT empl_name, empl_surname, phone_number, city, street, zip_code
-FROM Employee
-WHERE empl_surname = 'Ваше_прізвище';
-
--- 12. Отримати інформацію про усіх постійних клієнтів, що мають карту клієнта із певним відсотком, посортованих за прізвищем
- --                                                                                           !!!   ГОТОВО !!!
-SELECT * FROM Customer_Card
-WHERE percent = 10  -- замінити на потрібний відсоток
-ORDER BY cust_surname;
-
 
 -- 14. За UPC-товару знайти ціну продажу товару, кількість наявних одиниць товару, назву та характеристики товару
            --                                                                                 !!!   ГОТОВО !!!
@@ -113,10 +88,6 @@ ORDER BY p.product_name;
 SELECT * FROM Customer_Card
 ORDER BY cust_surname;
 
--- 6. Здійснити пошук постійних клієнтів за прізвищем    !!!   ГОТОВО !!!
-SELECT * FROM Customer_Card
-WHERE cust_surname LIKE '%прізвище%';
-
 -- 7. Додавання чеку (продаж товарів)
 INSERT INTO Check (check_number, id_employee, card_number, print_date, sum_total, vat)
 VALUES ('номер_чеку', 'ID_касира', 'номер_картки', NOW(), сума, ПДВ);
@@ -177,11 +148,6 @@ SELECT selling_price, products_number
 FROM Store_Product
 WHERE UPC = 'UPC_код';
 
--- 15. Можливість отримати усю інформацію про себе (для працівника)        !!!   ГОТОВО !!!
-SELECT * FROM Employee
-WHERE id_employee = 'ваш_ID';
-
-
 
 ----------------------------------     Кастомні запити     -------------------------------
 
@@ -206,7 +172,7 @@ WHERE NOT EXISTS (
 )
 
 
--- 2. Запит на групування параметричний (застосувати в JdbcCustomer_cardDao)        !! WAS TESTED !!
+-- 2. Запит на групування параметричний (застосувати в JdbcCustomer_cardDao)        !! WAS TESTED !!  !!  WAS CODED  !!
 -- Умова: Для обраної карти клієнта, для кожної категорії обрахувати суму знижки, яка була зроблена у всіх чеках.
 -- Запит:
 
@@ -223,8 +189,8 @@ FROM Category c
 GROUP BY c.category_number, c.category_name
 ORDER BY c.category_number;
 
--- 3.Запит на подвійне заперечення  (застосувати в JdbcCategoryDao)   !! WAS TESTED !!
--- Умова: Знайти категорії, усі продукти яких є в Store_product.
+-- 3.Запит на подвійне заперечення  (застосувати в JdbcCategoryDao)   !! WAS TESTED !!  !!  WAS CODED  !!
+-- Умова: Знайти категорії, усі продукти яких є в магазині.
 -- Запит:
 
 SELECT c.*
@@ -241,7 +207,7 @@ WHERE NOT EXISTS (
 )
 
 
--- 4. Запит на групування параметричний (застосувати в JdbcEmployeeDao)           !! WAS TESTED !!
+-- 4. Запит на групування параметричний (застосувати в JdbcEmployeeDao)           !! WAS TESTED !!   !!  WAS CODED  !!
 -- Умова: Для обраного employee для кожної категорії вивести суму податку, який був сплачений в усіх чеках, які сформував цей працівник
 -- Запит:
 SELECT

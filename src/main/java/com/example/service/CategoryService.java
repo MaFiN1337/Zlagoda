@@ -19,6 +19,7 @@ public class CategoryService {
     static final String DELETE_CATEGORY = "Delete category: %d";
     static final String SEARCH_CATEGORIES_BY_NAME = "Search categories by name: %s";
     static final String SEARCH_CATEGORIES_BY_NAME_AND_SORT = "Search categories by name and sort: %s";
+    static final String SEARCH_CATEGORIES_WITH_ALL_PRODUCTS_IN_STORE_PRODUCT = "Search categories with all products being present in store_product";
 
     private final DaoFactory daoFactory;
 
@@ -80,6 +81,13 @@ public class CategoryService {
         LOGGER.info(String.format(SEARCH_CATEGORIES_BY_NAME_AND_SORT, categoryName));
         try (CategoryDao categoryDao = daoFactory.createCategoryDao()){
             return categoryDao.searchCategoriesByNameAndSort(categoryName);
+        }
+    }
+
+    public List<Category> searchCategoriesWithAllProductsInStore_product(){
+        LOGGER.info(SEARCH_CATEGORIES_WITH_ALL_PRODUCTS_IN_STORE_PRODUCT);
+        try (CategoryDao categoryDao = daoFactory.createCategoryDao()){
+            return categoryDao.searchCategoriesWithAllProductsInStore_product();
         }
     }
 }

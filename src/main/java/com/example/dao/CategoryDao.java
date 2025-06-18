@@ -8,5 +8,7 @@ public interface CategoryDao extends GenericDao<Category, Long>, AutoCloseable {
 
     List<Category> searchCategoriesByNameAndSort(String categoryName);
 
+    List<Category> searchCategoriesWithAllProductsInStore_product();
+
     void close();
 }

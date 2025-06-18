@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProductService {
-    private static final Logger LOGGER = LogManager.getLogger(CategoryService.class);
+    private static final Logger LOGGER = LogManager.getLogger(ProductService.class);
 
     static final String GET_ALL_PRODUCTS = "Get all products";
     static final String GET_PRODUCTS_BY_ID = "Get products by id: %d";

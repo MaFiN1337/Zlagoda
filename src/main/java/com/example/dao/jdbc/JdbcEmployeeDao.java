@@ -1,6 +1,7 @@
 package com.example.dao.jdbc;
 
 import com.example.dao.EmployeeDao;
+import com.example.dto.EmployeeTaxSummaryDto;
 import com.example.entity.Employee;
 import com.example.entity.Role;
 import com.example.exception.ServerException;
@@ -26,6 +27,16 @@ public class JdbcEmployeeDao implements EmployeeDao {
     private static final String SEARCH_EMPLOYEES_BY_SURNAME = "SELECT * FROM `employee` WHERE LOWER(empl_surname) LIKE CONCAT('%', LOWER(?), '%')";
     private static final String SEARCH_EMPLOYEE_CASHIERS_SORTED_BY_SURNAME = "SELECT * FROM `Employee` WHERE empl_role = 'cashier'"
             + "ORDER BY empl_surname";
+    private static final String SEARCH_EMPLOYEE_SUM_OF_VATS_FOR_EACH_CATEGORY =
+            "SELECT c.category_number, c.category_name,SUM(s.selling_price) * 0.2 AS total_tax" +
+            "FROM Employee e" +
+            "         INNER JOIN Check_table ct ON e.id_employee = ct.id_employee" +
+            "         INNER JOIN Sale s ON ct.check_number = s.check_number" +
+            "         INNER JOIN Store_product sp ON s.UPC = sp.UPC" +
+            "         INNER JOIN Product p ON sp.id_product = p.id_product" +
+            "         INNER JOIN Category c ON p.category_number = c.category_number" +
+            "WHERE e.id_employee = ?" +
+            "GROUP BY c.category_number, c.category_name";
 
     private static final String ID = "id_employee";
     private static final String NAME = "empl_name";
@@ -39,6 +50,10 @@ public class JdbcEmployeeDao implements EmployeeDao {
     private static final String CITY = "city";
     private static final String STREET = "street";
     private static final String ZIP_CODE = "zip_code";
+    private static final String CATEGORY_NUMBER = "category_number";
+    private static final String CATEGORY_NAME = "category_name";
+    private static final String TAX_AMOUNT = "tax_amount";
+
 
     private Connection connection;
     private final boolean connectionShouldBeClosed;
@@ -63,7 +78,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
 
         try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL)) {
             while (resultSet.next()) {
-                employees.add(extractUserFromResultSet(resultSet));
+                employees.add(extractEmployeeFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             LOGGER.error("JdbcEmployeeDao getAll SQL exception", e);
@@ -79,7 +94,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
             query.setString(1, id);
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
-                employee = Optional.of(extractUserFromResultSet(resultSet));
+                employee = Optional.of(extractEmployeeFromResultSet(resultSet));
             }
 
         } catch (SQLException e) {
@@ -156,7 +171,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
             query.setString(1, surname);
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
-                employee = Optional.of(extractUserFromResultSet(resultSet));
+                employee = Optional.of(extractEmployeeFromResultSet(resultSet));
             }
 
         } catch (SQLException e) {
@@ -173,13 +188,31 @@ public class JdbcEmployeeDao implements EmployeeDao {
                 Statement query = connection.createStatement();
                 ResultSet resultSet = query.executeQuery(SEARCH_EMPLOYEE_CASHIERS_SORTED_BY_SURNAME)) {
             while (resultSet.next()) {
-                employees.add(extractUserFromResultSet(resultSet));
+                employees.add(extractEmployeeFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             LOGGER.error("JdbcEmployeeDao searchAllCashiersSortedBySurname SQL exception", e);
             throw new ServerException(e);
         }
         return employees;
+    }
+
+    @Override
+    public List<EmployeeTaxSummaryDto> searchEmployeeSumOfVatForEachCategory(Employee employee){
+        List<EmployeeTaxSummaryDto> taxSummaryDto = new ArrayList<>();
+
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_EMPLOYEE_SUM_OF_VATS_FOR_EACH_CATEGORY)) {
+            query.setString(1, employee.getId());
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                taxSummaryDto.add(extractEmployeeTaxSummaryDto(resultSet));
+            }
+        } catch (SQLException e) {
+            LOGGER.error("JdbcEmployeeDao searchEmployeeSumOfVatForEachCategory SQL exception: " + employee, e);
+            throw new ServerException(e);
+        }
+
+        return taxSummaryDto;
     }
 
     @Override
@@ -194,7 +227,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
         }
     }
 
-    protected static Employee extractUserFromResultSet(ResultSet resultSet) throws SQLException {
+    protected static Employee extractEmployeeFromResultSet(ResultSet resultSet) throws SQLException {
 
         return new Employee.Builder().setId(resultSet.getString(ID)).setName(resultSet.getString(NAME))
                 .setSurname(resultSet.getString(SURNAME)).setPatronymic(resultSet.getString(PATRONYMIC)).setSalary(resultSet.getBigDecimal(SALARY))
@@ -204,10 +237,11 @@ public class JdbcEmployeeDao implements EmployeeDao {
                 .setZip_code(resultSet.getString(ZIP_CODE)).build();
     }
 
-    protected static Employee extractUserGeneralInfoFromResultSet(ResultSet resultSet) throws SQLException {
+    protected static EmployeeTaxSummaryDto extractEmployeeTaxSummaryDto(ResultSet resultSet) throws SQLException {
 
-        return new Employee.Builder().setId(resultSet.getString(ID)).setName(resultSet.getString(NAME))
-                .setSurname(resultSet.getString(SURNAME)).build();
+        return new EmployeeTaxSummaryDto.Builder().setCategoryName(resultSet.getString(CATEGORY_NAME))
+                .setTaxAmount(resultSet.getBigDecimal(TAX_AMOUNT))
+                .setCategoryNumber(resultSet.getBigDecimal(CATEGORY_NUMBER)).build();
     }
 
 }

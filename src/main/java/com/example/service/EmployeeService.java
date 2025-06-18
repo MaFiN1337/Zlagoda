@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.dao.DaoFactory;
 import com.example.dao.EmployeeDao;
+import com.example.dto.EmployeeTaxSummaryDto;
 import com.example.entity.Employee;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EmployeeService {
-    private static final Logger LOGGER = LogManager.getLogger(CategoryService.class);
+    private static final Logger LOGGER = LogManager.getLogger(EmployeeService.class);
 
     static final String GET_ALL_EMPLOYEES = "Get all employees";
     static final String GET_EMPLOYEE_BY_ID = "Get employee by id: %s";
@@ -18,7 +19,8 @@ public class EmployeeService {
     static final String UPDATE_EMPLOYEES = "Update employee: %s";
     static final String DELETE_EMPLOYEES = "Delete employee: %s";
     static final String SEARCH_EMPLOYEES_BY_SURNAME = "Search employees by surname: %s";
-    static final String SEARCH_EMPLOYEE_CASHIERS_SORTED_BY_SURNAME = "Search employees-cashiers by surname and sort: %s";
+    static final String SEARCH_EMPLOYEE_CASHIERS_SORTED_BY_SURNAME = "Search employees-cashiers  by surname";
+    static final String SEARCH_EMPLOYEE_SUM_OF_VAT_FOR_EACH_CATEGORY = "Search sum of vat for each category by id_employee %s";
 
     private final DaoFactory daoFactory;
 
@@ -80,6 +82,13 @@ public class EmployeeService {
         LOGGER.info(SEARCH_EMPLOYEE_CASHIERS_SORTED_BY_SURNAME);
         try (EmployeeDao employeeDao = daoFactory.createEmployeeDao()) {
             return employeeDao.searchAllCashiersSortedBySurname();
+        }
+    }
+
+    public List<EmployeeTaxSummaryDto> searchEmployeeSumOfVatForEachCategory(Employee employee){
+        LOGGER.info(String.format(SEARCH_EMPLOYEE_SUM_OF_VAT_FOR_EACH_CATEGORY, employee));
+        try (EmployeeDao employeeDao = daoFactory.createEmployeeDao()){
+            return employeeDao.searchEmployeeSumOfVatForEachCategory(employee);
         }
     }
 }

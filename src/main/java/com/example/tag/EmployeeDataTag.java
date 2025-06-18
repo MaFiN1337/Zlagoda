@@ -12,7 +12,7 @@ import java.io.IOException;
 public class EmployeeDataTag extends TagSupport {
     private Employee employee;
 
-    public void setUser(Employee employee) {
+    public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 

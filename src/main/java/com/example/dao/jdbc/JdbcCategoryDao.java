@@ -21,6 +21,11 @@ public class JdbcCategoryDao implements CategoryDao {
     private static final String DELETE = "DELETE FROM `Category` WHERE category_number=?";
     private static final String SEARCH_CATEGORY_BY_NAME = "SELECT * FROM `Category` WHERE LOWER(category_name) LIKE CONCAT('%', LOWER(?), '%')";
     private static final String SEARCH_CATEGORY_BY_NAME_AND_SORT = "SELECT * FROM `Category` WHERE LOWER(category_name) LIKE CONCAT('%', LOWER(?), '%') ORDER BY category_name";
+    private static final String SEARCH_CATEGORIES_WITH_ALL_PRODUCTS_IN_STORE_PRODUCT =
+            "SELECT c.* FROM Category c WHERE NOT EXISTS (   " +
+                    "SELECT * FROM Product p WHERE p.category_number = c.category_number  " +
+                    "AND NOT EXISTS (       " +
+                            "SELECT * FROM Store_product sp WHERE sp.id_product = p.id_product ))";
 
     private static final String ID = "category_number";
     private static final String NAME = "Category.category_name";
@@ -142,6 +147,21 @@ public class JdbcCategoryDao implements CategoryDao {
             }
         } catch (SQLException e) {
             LOGGER.error("JdbcCategoryDao searchCategoryByName SQL exception: " + categoryName, e);
+            throw new ServerException(e);
+        }
+        return categories;
+    }
+
+    @Override
+    public List<Category> searchCategoriesWithAllProductsInStore_product(){
+        List<Category> categories = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_CATEGORIES_WITH_ALL_PRODUCTS_IN_STORE_PRODUCT)) {
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                categories.add(extractCategoryFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            LOGGER.error("JdbcCategoryDao searchCategoriesWithAllProductsInStore_product SQL exception", e);
             throw new ServerException(e);
         }
         return categories;

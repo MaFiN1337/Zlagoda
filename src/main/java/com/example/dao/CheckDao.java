@@ -6,11 +6,11 @@ import com.example.entity.Store_product;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface CheckDao extends GenericDao<Check, String>, AutoCloseable{
 
-
-    Check searchCheckByNumber(String number);
+    Optional<Check> searchCheckByNumber(String number);
 
     List<Check> searchChecksByEmployeeId(String id);
 
@@ -22,9 +22,9 @@ public interface CheckDao extends GenericDao<Check, String>, AutoCloseable{
 
     List<Check> searchChecksPerPeriod(LocalDate fromDate, LocalDate toDate);
 
-    Long searchSumOfChecksByEmployeeSurnamePerPeriod(String surname, LocalDate fromDate, LocalDate toDate);
+    BigDecimal searchSumOfChecksByEmployeeSurnamePerPeriod(String surname, LocalDate fromDate, LocalDate toDate);
 
-    Long searchSumOfChecksPerPeriod(LocalDate fromDate, LocalDate toDate);
+    BigDecimal searchSumOfChecksPerPeriod(LocalDate fromDate, LocalDate toDate);
 
     BigDecimal searchAmountOfStoreProductsPerPeriod(Store_product storeProduct, LocalDate fromDate, LocalDate toDate);
 
