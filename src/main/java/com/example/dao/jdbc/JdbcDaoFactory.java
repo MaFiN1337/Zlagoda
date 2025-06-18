@@ -23,7 +23,7 @@ public class JdbcDaoFactory extends DaoFactory {
 
     private static final Logger LOGGER = LogManager.getLogger(JdbcDaoFactory.class);
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public JdbcDaoFactory() {
         try {
@@ -47,7 +47,7 @@ public class JdbcDaoFactory extends DaoFactory {
     }
 
     @Override
-    public EmployeeDao createUserDao() {
+    public EmployeeDao createEmployeeDao() {
         try {
             return new JdbcEmployeeDao(dataSource.getConnection(), true);
         } catch (SQLException e) {
@@ -57,7 +57,7 @@ public class JdbcDaoFactory extends DaoFactory {
     }
 
     @Override
-    public EmployeeDao createUserDao(DaoConnection connection) {
+    public EmployeeDao createEmployeeDao(DaoConnection connection) {
         JdbcDaoConnection jdbcConnection = (JdbcDaoConnection) connection;
         Connection sqlConnection = jdbcConnection.getConnection();
         return new JdbcEmployeeDao(sqlConnection);
@@ -85,7 +85,7 @@ public class JdbcDaoFactory extends DaoFactory {
         try {
             return new JdbcProductDao(dataSource.getConnection(), true);
         } catch (SQLException e) {
-            LOGGER.error("Can't get DB Connection for JdbcDishDao creation", e);
+            LOGGER.error("Can't get DB Connection for JdbcProductDao creation", e);
             throw new ServerException(e);
         }
     }
@@ -102,7 +102,7 @@ public class JdbcDaoFactory extends DaoFactory {
         try {
             return new JdbcStore_productDao(dataSource.getConnection(), true);
         } catch (SQLException e) {
-            LOGGER.error("Can't get DB Connection for JdbcOrderDao creation", e);
+            LOGGER.error("Can't get DB Connection for JdbcStore_productDao creation", e);
             throw new ServerException(e);
         }
     }
@@ -119,7 +119,7 @@ public class JdbcDaoFactory extends DaoFactory {
         try {
             return new JdbcCustomer_cardDao(dataSource.getConnection(), true);
         } catch (SQLException e) {
-            LOGGER.error("Can't get DB Connection for JdbcOrderDao creation", e);
+            LOGGER.error("Can't get DB Connection for JdbcCustomer_cardDao creation", e);
             throw new ServerException(e);
         }
     }
@@ -136,7 +136,7 @@ public class JdbcDaoFactory extends DaoFactory {
         try {
             return new JdbcCheckDao(dataSource.getConnection(), true);
         } catch (SQLException e) {
-            LOGGER.error("Can't get DB Connection for JdbcOrderDao creation", e);
+            LOGGER.error("Can't get DB Connection for JdbcCheckDao creation", e);
             throw new ServerException(e);
         }
     }

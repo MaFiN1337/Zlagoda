@@ -32,7 +32,7 @@ public class ProductService {
     }
 
     public static ProductService getInstance() {
-        return ProductService.Holder.INSTANCE;
+        return Holder.INSTANCE;
     }
 
     public List<Product> getAllProducts() {

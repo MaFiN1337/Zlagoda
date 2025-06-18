@@ -37,6 +37,22 @@ public class JdbcEmployeeDao implements EmployeeDao {
             "         INNER JOIN Category c ON p.category_number = c.category_number" +
             "WHERE e.id_employee = ?" +
             "GROUP BY c.category_number, c.category_name";
+    private static final String SEARCH_EMPLOYEES_SELLING_ALL_CATEGORIES_OF_PRODUCTS =
+            "SELECT e.*\n" +
+            "FROM Employee e" +
+            "WHERE NOT EXISTS (" +
+            "    SELECT *" +
+            "    FROM Category c" +
+            "    WHERE NOT EXISTS (" +
+            "        SELECT *" +
+            "        FROM Check_table ct" +
+            "                 INNER JOIN Sale s ON s.check_number = ct.check_number" +
+            "                 INNER JOIN Store_product sp ON sp.UPC = s.UPC" +
+            "                 INNER JOIN Product pr ON sp.id_product = pr.id_product" +
+            "        WHERE ct.id_employee = e.id_employee" +
+            "          AND pr.category_number = c.category_number" +
+            "    )" +
+            ")";
 
     private static final String ID = "id_employee";
     private static final String NAME = "empl_name";
@@ -213,6 +229,23 @@ public class JdbcEmployeeDao implements EmployeeDao {
         }
 
         return taxSummaryDto;
+    }
+
+    @Override
+    public List<Employee> searchEmployeesSellingAllCategoriesOfProducts(){
+        List<Employee> employees = new ArrayList<>();
+
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_EMPLOYEES_SELLING_ALL_CATEGORIES_OF_PRODUCTS)) {
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                employees.add(extractEmployeeFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            LOGGER.error("JdbcEmployeeDao searchEmployeesSellingAllCategoriesOfProducts SQL exception", e);
+            throw new ServerException(e);
+        }
+
+        return employees;
     }
 
     @Override

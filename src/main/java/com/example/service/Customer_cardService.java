@@ -34,7 +34,7 @@ public class Customer_cardService {
     }
 
     public static Customer_cardService getInstance() {
-        return Customer_cardService.Holder.INSTANCE;
+        return Holder.INSTANCE;
     }
 
     public List<Customer_card> getAllCustomer_cards() {

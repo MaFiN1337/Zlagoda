@@ -21,6 +21,7 @@ public class EmployeeService {
     static final String SEARCH_EMPLOYEES_BY_SURNAME = "Search employees by surname: %s";
     static final String SEARCH_EMPLOYEE_CASHIERS_SORTED_BY_SURNAME = "Search employees-cashiers  by surname";
     static final String SEARCH_EMPLOYEE_SUM_OF_VAT_FOR_EACH_CATEGORY = "Search sum of vat for each category by id_employee %s";
+    static final String SEARCH_EMPLOYEES_SELLING_ALL_CATEGORIES_OF_PRODUCTS = "Search employees, who have sold products in all categories";
 
     private final DaoFactory daoFactory;
 
@@ -33,7 +34,7 @@ public class EmployeeService {
     }
 
     public static EmployeeService getInstance() {
-        return EmployeeService.Holder.INSTANCE;
+        return Holder.INSTANCE;
     }
 
     public List<Employee> getAllEmployees() {
@@ -89,6 +90,13 @@ public class EmployeeService {
         LOGGER.info(String.format(SEARCH_EMPLOYEE_SUM_OF_VAT_FOR_EACH_CATEGORY, employee));
         try (EmployeeDao employeeDao = daoFactory.createEmployeeDao()){
             return employeeDao.searchEmployeeSumOfVatForEachCategory(employee);
+        }
+    }
+
+    public List<Employee> searchEmployeesHavingSoldAllCategoriesOfProducts(){
+        LOGGER.info(SEARCH_EMPLOYEES_SELLING_ALL_CATEGORIES_OF_PRODUCTS);
+        try (EmployeeDao employeeDao = daoFactory.createEmployeeDao()){
+            return employeeDao.searchEmployeesSellingAllCategoriesOfProducts();
         }
     }
 }

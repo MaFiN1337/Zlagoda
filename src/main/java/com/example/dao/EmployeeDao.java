@@ -12,8 +12,8 @@ public interface EmployeeDao extends GenericDao<Employee, String>, AutoCloseable
 
     Optional<Employee> searchEmployeeBySurname(String surname);
 
-    List<EmployeeTaxSummaryDto>  searchEmployeeSumOfVatForEachCategory(Employee employee);
+    List<EmployeeTaxSummaryDto> searchEmployeeSumOfVatForEachCategory(Employee employee);
 
-
+    List<Employee> searchEmployeesSellingAllCategoriesOfProducts();
     void close();
 }

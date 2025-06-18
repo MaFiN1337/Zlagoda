@@ -1,14 +1,13 @@
 package com.example.dao.jdbc;
 
 import com.example.dao.CheckDao;
-import com.example.entity.Category;
+import com.example.dto.CheckSumDto;
 import com.example.entity.Check;
 import com.example.entity.Store_product;
 import com.example.exception.ServerException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,8 +30,76 @@ public class JdbcCheckDao implements CheckDao {
     private static final String CREATE = "INSERT INTO `Check_table` (check_number, print_date, sum_total, vat, id_employee, card_number) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE `Check_table` SET print_date=? WHERE check_number=?";
     private static final String DELETE = "DELETE FROM `Check_table` WHERE check_number=?";
-    private static final String SEARCH_CATEGORY_BY_NAME = "SELECT * FROM `Category` WHERE LOWER(category_name) LIKE CONCAT('%', LOWER(?), '%')";
-    private static final String SEARCH_CATEGORY_BY_NAME_AND_SORT = "SELECT * FROM `Category` WHERE LOWER(category_name) LIKE CONCAT('%', LOWER(?), '%') ORDER BY category_name";
+    private static final String SEARCH_CHECK_BY_NUMBER =
+            "SELECT c.*, s.product_number, s.selling_price, p.product_name, e.surname, e.phone_number, cc.cust_surname, cc.cust_name" +
+            "FROM Check_table c" +
+            "JOIN Sale s ON c.check_number = s.check_number" +
+            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            "JOIN Product p ON sp.id_product = p.id_product" +
+            "JOIN Customer_card cc ON cc.card_number = c.card_number" +
+            "JOIN Employee e ON e.id_employee = c.id_employee" +
+            "WHERE c.check_number = ?";
+    private static final String SEARCH_CHECKS_BY_EMPLOYEE_ID =
+            "SELECT c.*, s.product_number, s.selling_price, p.product_name, e.surname, e.phone_number, cc.cust_surname, cc.cust_name" +
+            "FROM Check_table c" +
+            "JOIN Sale s ON c.check_number = s.check_number" +
+            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            "JOIN Product p ON sp.id_product = p.id_product" +
+            "JOIN Customer_card cc ON cc.card_number = c.card_number" +
+            "JOIN Employee e ON e.id_employee = c.id_employee" +
+            "WHERE e.id_employee = ?";
+    private static final String SEARCH_CHECKS_BY_EMPLOYEE_SURNAME =
+            "SELECT c.*, s.product_number, s.selling_price, p.product_name, e.surname, e.phone_number, cc.cust_surname, cc.cust_name" +
+            "FROM Check_table c" +
+            "JOIN Sale s ON c.check_number = s.check_number" +
+            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            "JOIN Product p ON sp.id_product = p.id_product" +
+            "JOIN Customer_card cc ON cc.card_number = c.card_number" +
+            "JOIN Employee e ON e.id_employee = c.id_employee" +
+            "WHERE e.empl_surname = ?";
+    private static final String SEARCH_CHECKS_BY_EMPLOYEE_ID_PER_PERIOD =
+            "SELECT c.*, s.product_number, s.selling_price, p.product_name" +
+            "FROM Check_table c" +
+            "JOIN Sale s ON c.check_number = s.check_number" +
+            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            "JOIN Product p ON sp.id_product = p.id_product" +
+            "WHERE c.id_employee = ?" +
+            "AND c.print_date BETWEEN ? AND ?" +
+            "ORDER BY c.print_date, c.check_number;";
+    private static final String SEARCH_CHECKS_BY_EMPLOYEE_SURNAME_PER_PERIOD =
+            "SELECT c.*, s.product_number, s.selling_price, p.product_name" +
+            "FROM Check_table c" +
+            "JOIN Sale s ON c.check_number = s.check_number" +
+            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            "JOIN Product p ON sp.id_product = p.id_product" +
+            "WHERE c.empl_surname = ?" +
+            "AND c.print_date BETWEEN ? AND ?" +
+            "ORDER BY c.print_date, c.check_number;";
+    private static final String SEARCH_CHECKS_PER_PERIOD =
+            "SELECT c.*, s.product_number, s.selling_price, p.product_name" +
+            "FROM Check_table c" +
+            "JOIN Sale s ON c.check_number = s.check_number" +
+            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            "JOIN Product p ON sp.id_product = p.id_product" +
+            "WHERE c.print_date BETWEEN ? AND ?" +
+            "ORDER BY c.print_date, c.check_number;";
+    private static final String SEARCH_SUM_OF_CHECKS_BY_EMPLOYEE_SURNAME_PER_PERIOD =
+            "SELECT SUM(c.sum_total) as total" +
+            "FROM Check_table c" +
+            "WHERE c.empl_surname = ?" +
+            "AND c.print_date BETWEEN ? AND ?";
+    private static final String SEARCH_SUM_OF_CHECKS_PER_PERIOD =
+            "SELECT SUM(c.sum_total) as total" +
+            "FROM Check_table c" +
+            "WHERE c.print_date BETWEEN ? AND ?";
+    private static final String SEARCH_AMOUNT_OF_STORE_PRODUCT_PER_PERIOD =
+            "SELECT SUM(s.product_number) as total" +
+            "FROM Sale s" +
+            "JOIN Check_table c ON s.check_number = c.check_number" +
+            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            "JOIN Product p ON sp.id_product = p.id_product" +
+            "WHERE p.product_name = ?" +
+            "AND c.print_date BETWEEN ? AND ?";
 
     private static final String ID = "check_number";
     private static final String PRINT_DATE = "print_date";
@@ -40,6 +107,7 @@ public class JdbcCheckDao implements CheckDao {
     private static final String VAT = "vat";
     private static final String ID_EMPLOYEE = "id_employee";
     private static final String CARD_NUMBER = "card_number";
+    private static final String TOTAL = "total";
 
     private Connection connection;
     private final boolean connectionShouldBeClosed;
@@ -135,47 +203,181 @@ public class JdbcCheckDao implements CheckDao {
 
     @Override
     public Optional<Check> searchCheckByNumber(String number){
+        Optional<Check> check = Optional.empty();
 
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_CHECK_BY_NUMBER)) {
+            query.setString(1, number);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                check = Optional.of(extractCheckFromResultSet(resultSet));
+            }
+
+        } catch (SQLException e) {
+            LOGGER.error("JdbcCheckDao searchCheckByNumber SQL exception: " + number, e);
+            throw new ServerException(e);
+        }
+        return check;
     }
 
     @Override
     public List<Check> searchChecksByEmployeeId(String id){
+        List<Check> checks = new ArrayList<>();
 
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_CHECKS_BY_EMPLOYEE_ID)) {
+            query.setString(1, id);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                checks.add(extractCheckFromResultSet(resultSet));
+            }
+
+        } catch (SQLException e) {
+            LOGGER.error("JdbcCheckDao searchChecksByEmployeeId SQL exception: " + id, e);
+            throw new ServerException(e);
+        }
+        return checks;
     }
 
     @Override
     public List<Check> searchChecksByEmployeeSurname(String surname){
+        List<Check> checks = new ArrayList<>();
 
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_CHECKS_BY_EMPLOYEE_SURNAME)) {
+            query.setString(1, surname);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                checks.add(extractCheckFromResultSet(resultSet));
+            }
+
+        } catch (SQLException e) {
+            LOGGER.error("JdbcCheckDao searchChecksByEmployeeSurname SQL exception" , e);
+            throw new ServerException(e);
+        }
+        return checks;
     }
 
     @Override
     public List<Check> searchChecksByEmployeeIdPerPeriod(String id, LocalDate fromDate, LocalDate toDate){
+        List<Check> checks = new ArrayList<>();
 
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_CHECKS_BY_EMPLOYEE_ID_PER_PERIOD)) {
+            query.setString(1, id);
+            query.setTimestamp(2, Timestamp.valueOf(fromDate.atStartOfDay()));
+            query.setTimestamp(3, Timestamp.valueOf(toDate.atStartOfDay()));
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                checks.add(extractCheckFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            LOGGER.error("JdbcCheckDao searchChecksByEmployeeIdPerPeriod SQL exception", e);
+            throw new ServerException(e);
+        }
+        return checks;
     }
 
     @Override
     public List<Check> searchChecksByEmployeeSurnamePerPeriod(String surname, LocalDate fromDate, LocalDate toDate){
+        List<Check> checks = new ArrayList<>();
 
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_CHECKS_BY_EMPLOYEE_SURNAME_PER_PERIOD)) {
+            query.setString(1, surname);
+            query.setTimestamp(2, Timestamp.valueOf(fromDate.atStartOfDay()));
+            query.setTimestamp(3, Timestamp.valueOf(toDate.atStartOfDay()));
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                checks.add(extractCheckFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            LOGGER.error("JdbcCheckDao searchChecksByEmployeeSurnamePerPeriod SQL exception", e);
+            throw new ServerException(e);
+        }
+        return checks;
     }
 
     @Override
     public List<Check> searchChecksPerPeriod(LocalDate fromDate, LocalDate toDate){
+        List<Check> checks = new ArrayList<>();
 
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_CHECKS_PER_PERIOD)) {
+            query.setTimestamp(1, Timestamp.valueOf(fromDate.atStartOfDay()));
+            query.setTimestamp(2, Timestamp.valueOf(toDate.atStartOfDay()));
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                checks.add(extractCheckFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            LOGGER.error("JdbcCheckDao searchChecksPerPeriod SQL exception", e);
+            throw new ServerException(e);
+        }
+        return checks;
     }
 
     @Override
-    public BigDecimal searchSumOfChecksByEmployeeSurnamePerPeriod(String surname, LocalDate fromDate, LocalDate toDate)
+    public Optional<CheckSumDto> searchSumOfChecksByEmployeeSurnamePerPeriod(String surname, LocalDate fromDate, LocalDate toDate){
+        Optional<CheckSumDto> checkSumDto = Optional.empty();
 
-    @Override
-    public BigDecimal searchSumOfChecksPerPeriod(LocalDate fromDate, LocalDate toDate){
-
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_SUM_OF_CHECKS_BY_EMPLOYEE_SURNAME_PER_PERIOD)) {
+            query.setString(1, surname);
+            query.setTimestamp(2, Timestamp.valueOf(fromDate.atStartOfDay()));
+            query.setTimestamp(3, Timestamp.valueOf(toDate.atStartOfDay()));
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                checkSumDto = Optional.of(extractSumFromResultSet(resultSet));       // Створити Dto
+            }
+        } catch (SQLException e) {
+            LOGGER.error("JdbcCheckDao searchSumOfChecksByEmployeeSurnamePerPeriod SQL exception", e);
+            throw new ServerException(e);
+        }
+        return checkSumDto;
     }
 
     @Override
-    public BigDecimal searchAmountOfStoreProductsPerPeriod(Store_product storeProduct, LocalDate fromDate, LocalDate toDate){
+    public Optional<CheckSumDto> searchSumOfChecksPerPeriod(LocalDate fromDate, LocalDate toDate){
+        Optional<CheckSumDto> checkSumDto = Optional.empty();
 
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_SUM_OF_CHECKS_PER_PERIOD)) {
+            query.setTimestamp(1, Timestamp.valueOf(fromDate.atStartOfDay()));
+            query.setTimestamp(2, Timestamp.valueOf(toDate.atStartOfDay()));
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                checkSumDto = Optional.of(extractSumFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            LOGGER.error("JdbcCheckDao searchSumOfChecksPerPeriod SQL exception", e);
+            throw new ServerException(e);
+        }
+        return checkSumDto;
     }
 
+    @Override
+    public Optional<CheckSumDto> searchAmountOfStoreProductsPerPeriod(Store_product storeProduct, LocalDate fromDate, LocalDate toDate){
+        Optional<CheckSumDto> checkSumDto = Optional.empty();
+
+        try (PreparedStatement query = connection.prepareStatement(SEARCH_AMOUNT_OF_STORE_PRODUCT_PER_PERIOD)) {
+            query.setString(1, storeProduct.getUpc());
+            query.setTimestamp(2, Timestamp.valueOf(fromDate.atStartOfDay()));
+            query.setTimestamp(3, Timestamp.valueOf(toDate.atStartOfDay()));
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                checkSumDto = Optional.of(extractSumFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            LOGGER.error("JdbcCheckDao searchAmountOfStoreProductsPerPeriod SQL exception", e);
+            throw new ServerException(e);
+        }
+        return checkSumDto;
+    }
+
+    @Override
+    public void close() {
+        if (connectionShouldBeClosed) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("JdbcCheckDao Connection can't be closed", e);
+                throw new ServerException(e);
+            }
+        }
+    }
     protected static Check extractCheckFromResultSet(ResultSet resultSet) throws SQLException {
         return new Check.Builder().setNumber(resultSet.getString(ID)).setPrint_date(resultSet.getTimestamp(PRINT_DATE).toLocalDateTime())
                 .setSum_total(resultSet.getBigDecimal(SUM_TOTAL)).setVat(resultSet.getBigDecimal(VAT))
@@ -183,4 +385,7 @@ public class JdbcCheckDao implements CheckDao {
                 .setEmployee(JdbcEmployeeDao.extractEmployeeFromResultSet(resultSet)).build();
     }
 
+    protected static CheckSumDto extractSumFromResultSet(ResultSet resultSet) throws SQLException {
+        return new CheckSumDto.Builder().setSum(resultSet.getBigDecimal(TOTAL)).build();
+    }
 }
