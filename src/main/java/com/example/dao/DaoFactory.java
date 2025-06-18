@@ -19,8 +19,8 @@ public abstract class DaoFactory {
 
     public abstract DaoConnection getConnection();
 
-    public abstract EmployeeDao createUserDao();
-    public abstract EmployeeDao createUserDao(DaoConnection connection);
+    public abstract EmployeeDao createEmployeeDao();
+    public abstract EmployeeDao createEmployeeDao(DaoConnection connection);
 
     public abstract CategoryDao createCategoryDao();
     public abstract CategoryDao createCategoryDao(DaoConnection connection);
