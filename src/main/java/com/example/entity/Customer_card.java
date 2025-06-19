@@ -1,6 +1,5 @@
 package com.example.entity;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Customer_card {
@@ -12,7 +11,7 @@ public class Customer_card {
     private String city;
     private String street;
     private String zip_code;
-    private BigDecimal percent;
+    private Long percent;
 
 
     public Customer_card() {
@@ -64,7 +63,7 @@ public class Customer_card {
             return this;
         }
 
-        public Customer_card.Builder setPercent(BigDecimal percent) {
+        public Customer_card.Builder setPercent(Long percent) {
             customer_card.percent = percent;
             return this;
         }
@@ -140,11 +139,11 @@ public class Customer_card {
         this.zip_code = zip_code;
     }
 
-    public BigDecimal getPercent() {
+    public Long getPercent() {
         return percent;
     }
 
-    public void setPercent(BigDecimal percent) {
+    public void setPercent(Long percent) {
         this.percent = percent;
     }
 

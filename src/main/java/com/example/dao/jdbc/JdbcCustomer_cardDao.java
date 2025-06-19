@@ -116,7 +116,7 @@ public class JdbcCustomer_cardDao implements Customer_cardDao {
             query.setString(5,  customer_card.getCity());
             query.setString(6,  customer_card.getStreet());
             query.setString(7,  customer_card.getZip_code());
-            query.setBigDecimal(8,  customer_card.getPercent());
+            query.setLong(8,  customer_card.getPercent());
             query.executeUpdate();
 
             ResultSet keys = query.getGeneratedKeys();
@@ -139,7 +139,7 @@ public class JdbcCustomer_cardDao implements Customer_cardDao {
             query.setString(5,  customer_card.getCity());
             query.setString(6,  customer_card.getStreet());
             query.setString(7,  customer_card.getZip_code());
-            query.setBigDecimal(8,  customer_card.getPercent());
+            query.setLong(8,  customer_card.getPercent());
             query.setString(9,  customer_card.getNumber());
             query.executeUpdate();
         } catch (SQLException e) {
@@ -226,7 +226,7 @@ public class JdbcCustomer_cardDao implements Customer_cardDao {
                 .setSurname(resultSet.getString(CUST_SURNAME)).setPatronymic(resultSet.getString(CUST_PATRONYMIC))
                 .setNumber(resultSet.getString(ID)).setPhone(resultSet.getString(PHONE_NUMBER))
                 .setCity(resultSet.getString(CITY)).setStreet(resultSet.getString(STREET))
-                .setZip_code(resultSet.getString(ZIP_CODE)).setPercent(resultSet.getBigDecimal(PERCENT))
+                .setZip_code(resultSet.getString(ZIP_CODE)).setPercent(resultSet.getLong(PERCENT))
                 .build();
     }
 
