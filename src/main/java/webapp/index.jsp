@@ -18,7 +18,7 @@
 
     <div class="row-fluid">
         <h2>
-            <fmt:message key="restaurant.greeting" bundle="${rb}" />
+            <fmt:message key="zlagoda.greeting" bundle="${rb}" />
         </h2>
     </div>
 

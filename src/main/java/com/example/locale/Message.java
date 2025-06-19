@@ -54,4 +54,6 @@ public final class Message {
     public static final String INVALID_SUM_TOTAL = "zlagoda.error.invalidSumTotal";
     public static final String INVALID_VAT = "zlagoda.error.invalidVat";
     public static final String INVALID_PERCENT = "zlagoda.error.invalidPercent";
+    public static final String INVALID_CATEGORY = "zlagoda.error.invalidCategory";
+
 }

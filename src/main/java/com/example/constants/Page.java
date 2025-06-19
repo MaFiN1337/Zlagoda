@@ -9,7 +9,6 @@ public final class Page {
     }
 
     public static final String HOME_VIEW = "/index" + SUFFIX;
-    public static final String LOGIN_VIEW = PREFIX + "login" + SUFFIX;
 
     public static final String ALL_EMPLOYEES_VIEW = PREFIX + "allEmployees" + SUFFIX;
     public static final String ADD_UPDATE_EMPLOYEE_VIEW = PREFIX + "addUpdateEmployee" + SUFFIX;

@@ -1,4 +1,8 @@
 package com.example.controller.command.check;
 
-public class AllChecksCommand {
-}
+import com.example.controller.command.Command;
+
+
+public class AllChecksCommand implements Command {
+
+    }

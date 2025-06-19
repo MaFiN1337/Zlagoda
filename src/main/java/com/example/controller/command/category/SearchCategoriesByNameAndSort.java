@@ -34,7 +34,7 @@ public class SearchCategoriesByNameAndSort implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String name = request.getParameter(Attribute.NAME);
+        String name = request.getParameter(Attribute.CATEGORY_NAME);
         List<String> errors = validateUserInput(name);
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams;

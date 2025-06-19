@@ -27,7 +27,7 @@ public class CategoryValidator implements Validator<Category> {
     public List<String> validate(Category category) {
         List<String> errors = new ArrayList<>();
 
-        fieldValidator.validateField(FieldValidatorKey.CATEGORY_NAME, category.getName(), errors);
+        fieldValidator.validateField(FieldValidatorKey.NAME, category.getName(), errors);
 
         return errors;
     }

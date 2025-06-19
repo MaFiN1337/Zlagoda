@@ -45,7 +45,7 @@ public class PostUpdateCategoryCommand implements Command {
 
     private Category getUserInput(HttpServletRequest request) {
         return new Category.Builder().setId(Long.parseLong(request.getParameter(Attribute.CATEGORY_NUMBER)))
-                .setName(request.getParameter(Attribute.NAME)).build();
+                .setName(request.getParameter(Attribute.CATEGORY_NAME)).build();
     }
 
     private List<String> validateUserInput(Category category) {
