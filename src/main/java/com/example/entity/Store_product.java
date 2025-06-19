@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Store_product {
     private String upc;
     private BigDecimal selling_price;
-    private int products_number;
+    private Long products_number;
     private boolean promotional_product;
     private Store_product upc_prom;
     private Product product;
@@ -15,7 +15,7 @@ public class Store_product {
 
     public static class Builder implements IBuilder<Store_product> {
 
-        private Store_product store_product = new Store_product();
+        private final Store_product store_product = new Store_product();
 
         public Store_product.Builder setUpc(String upc) {
             store_product.upc = upc;
@@ -32,7 +32,7 @@ public class Store_product {
             return this;
         }
 
-        public Store_product.Builder setProducts_number(int products_number) {
+        public Store_product.Builder setProducts_number(Long products_number) {
             store_product.products_number = products_number;
             return this;
         }
@@ -77,15 +77,15 @@ public class Store_product {
         this.selling_price = selling_price;
     }
 
-    public int getProducts_number() {
+    public Long getProducts_number() {
         return products_number;
     }
 
-    public void setProducts_number(int products_number) {
+    public void setProducts_number(Long products_number) {
         this.products_number = products_number;
     }
 
-    public boolean isPromotional_product() {
+    public boolean getPromotional_product() {
         return promotional_product;
     }
 
