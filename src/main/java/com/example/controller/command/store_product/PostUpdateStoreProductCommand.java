@@ -1,4 +1,4 @@
 package com.example.controller.command.store_product;
 
-public class PostUpdateEStoreProductCommand {
+public class PostUpdateStoreProductCommand {
 }

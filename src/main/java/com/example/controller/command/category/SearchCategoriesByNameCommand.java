@@ -22,11 +22,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SearchCategoriesByName implements Command {
+public class SearchCategoriesByNameCommand implements Command {
 
     private final CategoryService categoryService;
 
-    public SearchCategoriesByName(CategoryService userService) {
+    public SearchCategoriesByNameCommand(CategoryService userService) {
         this.categoryService = userService;
     }
 

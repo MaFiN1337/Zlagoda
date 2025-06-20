@@ -12,18 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class AllEmployeesCommand implements Command {
+public class SearchEmployeesHavingSoldAllCategoriesOfProductsCommand implements Command {
 
     private final EmployeeService employeeService;
 
-    public AllEmployeesCommand(EmployeeService employeeService) {
+    public SearchEmployeesHavingSoldAllCategoriesOfProductsCommand(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Employee> employees = employeeService.getAllEmployees();
+        List<Employee> employees = employeeService.searchEmployeesHavingSoldAllCategoriesOfProducts();
 
         request.setAttribute(Attribute.EMPLOYEES, employees);
         return Page.ALL_EMPLOYEES_VIEW;

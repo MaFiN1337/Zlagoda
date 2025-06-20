@@ -9,7 +9,6 @@ import com.example.controller.utils.RedirectionManager;
 import com.example.entity.Category;
 import com.example.locale.Message;
 import com.example.service.CategoryService;
-import com.example.validator.entity.CategoryValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

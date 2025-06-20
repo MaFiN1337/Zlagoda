@@ -23,12 +23,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SearchProductsByNameAndSort implements Command {
+public class SearchProductsByNameCommand implements Command {
 
     private final ProductService productService;
     private final CategoryService categoryService;
 
-    public SearchProductsByNameAndSort(ProductService productService, CategoryService categoryService) {
+    public SearchProductsByNameCommand(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
         this.categoryService = categoryService;
     }
@@ -49,7 +49,7 @@ public class SearchProductsByNameAndSort implements Command {
             return RedirectionManager.REDIRECTION;
         }
 
-        List<Product> products= productService.searchProductsByNameAndSort(name);
+        List<Product> products= productService.searchProductsByName(name);
 
         if (products.isEmpty()) {
             urlParams = new HashMap<>();

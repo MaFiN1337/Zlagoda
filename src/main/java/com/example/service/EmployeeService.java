@@ -58,7 +58,7 @@ public class EmployeeService {
         }
     }
 
-    public void updateProduct(Employee employee) {
+    public void updateEmployee(Employee employee) {
         LOGGER.info(String.format(UPDATE_EMPLOYEES, employee.getId()));
         try (EmployeeDao employeeDao = daoFactory.createEmployeeDao()) {
             employeeDao.update(employee);

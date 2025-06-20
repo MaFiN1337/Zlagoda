@@ -1,15 +1,18 @@
 package com.example.controller.command.product;
 
 import com.example.constants.Attribute;
+import com.example.constants.Page;
+import com.example.constants.ServletPath;
 import com.example.controller.command.Command;
 import com.example.controller.utils.HttpWrapper;
 import com.example.controller.utils.RedirectionManager;
 import com.example.entity.Product;
+import com.example.locale.Message;
 import com.example.service.CategoryService;
 import com.example.service.ProductService;
-import com.example.constants.ServletPath;
-import com.example.locale.Message;
-import com.example.constants.Page;
+import com.example.validator.field.AbstractFieldValidatorHandler;
+import com.example.validator.field.FieldValidatorKey;
+import com.example.validator.field.FieldValidatorsChainGenerator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +23,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SearchProductsByCategoryAndSortByName implements Command {
+public class SearchProductsByNameAndSortCommand implements Command {
 
     private final ProductService productService;
     private final CategoryService categoryService;
 
-    public SearchProductsByCategoryAndSortByName(ProductService productService, CategoryService categoryService) {
+    public SearchProductsByNameAndSortCommand(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
         this.categoryService = categoryService;
     }
@@ -34,8 +37,8 @@ public class SearchProductsByCategoryAndSortByName implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String category = request.getParameter(Attribute.CATEGORY);
-        List<String> errors = validateUserInput(category);
+        String name = request.getParameter(Attribute.PRODUCT_NAME);
+        List<String> errors = validateUserInput(name);
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams;
 
@@ -46,7 +49,7 @@ public class SearchProductsByCategoryAndSortByName implements Command {
             return RedirectionManager.REDIRECTION;
         }
 
-        List<Product> products = productService.searchProductsByCategoryAndSortByName(category);
+        List<Product> products= productService.searchProductsByNameAndSort(name);
 
         if (products.isEmpty()) {
             urlParams = new HashMap<>();
@@ -60,13 +63,11 @@ public class SearchProductsByCategoryAndSortByName implements Command {
         return Page.ALL_PRODUCTS_VIEW;
     }
 
-    private List<String> validateUserInput(String category) {
+    private List<String> validateUserInput(String name) {
         List<String> errors = new ArrayList<>();
 
-        if (category.isEmpty()) {
-            errors.add(Message.INVALID_CATEGORY);
-        }
-
+        AbstractFieldValidatorHandler fieldValidator = FieldValidatorsChainGenerator.getFieldValidatorsChain();
+        fieldValidator.validateField(FieldValidatorKey.NAME, name, errors);
         return errors;
     }
 }
