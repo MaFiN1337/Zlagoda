@@ -379,7 +379,7 @@ public enum CommandEnum {
     POST_UPDATE_STORE_PRODUCT {
         {
             this.key = "POST:manager/storeProducts/updateStoreProduct";
-            this.command = new PostUpdateStoreProductCommand(Store_productService.getInstance());
+            this.command = new PostUpdateStoreProductCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_CATEGORIES_WITH_ALL_PRODUCTS_IN_STORE_PRODUCT {
@@ -398,13 +398,13 @@ public enum CommandEnum {
     SEARCH_NON_PROMO_STORE_PRODUCTS_SORTED_BY_NAME {
         {
             this.key = "POST:manager/storeProducts/searchNonPromoByName";
-            this.command = new SearchNonPromoStoreProductsSortedByNameCommand(Store_productService.getInstance());
+            this.command = new SearchNonPromoStoreProductsSortedByNameCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_NON_PROMO_STORE_PRODUCTS_SORTED_BY_NAME_CASHIER {
         {
             this.key = "POST:cashier/storeProducts/searchNonPromoByName";
-            this.command = new SearchNonPromoStoreProductsSortedByNameCommand(Store_productService.getInstance());
+            this.command = new SearchNonPromoStoreProductsSortedByNameCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_NON_PROMO_STORE_PRODUCTS_SORTED_BY_PRODUCT_NUM {
@@ -422,25 +422,25 @@ public enum CommandEnum {
     SEARCH_PROMO_STORE_PRODUCTS_SORTED_BY_NAME {
         {
             this.key = "POST:manager/storeProducts/searchPromoByName";
-            this.command = new SearchPromoStoreProductsSortedByNameCommand(Store_productService.getInstance());
+            this.command = new SearchPromoStoreProductsSortedByNameCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_PROMO_STORE_PRODUCTS_SORTED_BY_NAME_CASHIER {
         {
             this.key = "POST:cashier/storeProducts/searchPromoByName";
-            this.command = new SearchPromoStoreProductsSortedByNameCommand(Store_productService.getInstance());
+            this.command = new SearchPromoStoreProductsSortedByNameCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_PROMO_STORE_PRODUCTS_SORTED_BY_PRODUCT_NUM {
         {
             this.key = "POST:manager/storeProducts/searchPromoByProductNum";
-            this.command = new SearchPromoStoreProductsSortedByProductNumCommand(Store_productService.getInstance());
+            this.command = new SearchPromoStoreProductsSortedByProductNumCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_PROMO_STORE_PRODUCTS_SORTED_BY_PRODUCT_NUM_CASHIER {
         {
             this.key = "POST:cashier/storeProducts/searchPromoByProductNum";
-            this.command = new SearchPromoStoreProductsSortedByProductNumCommand(Store_productService.getInstance());
+            this.command = new SearchPromoStoreProductsSortedByProductNumCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_STORE_PRODUCT_DETAILS_BY_UPC {
@@ -458,25 +458,25 @@ public enum CommandEnum {
     SEARCH_STORE_PRODUCTS_SORTED_BY_NAME {
         {
             this.key = "POST:manager/storeProducts/searchSortedByName";
-            this.command = new SearchStoreProductsSortedByNameCommand(Store_productService.getInstance());
+            this.command = new SearchStoreProductsSortedByNameCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_STORE_PRODUCTS_SORTED_BY_NAME_CASHIER {
         {
             this.key = "POST:cashier/storeProducts/searchSortedByName";
-            this.command = new SearchStoreProductsSortedByNameCommand(Store_productService.getInstance());
+            this.command = new SearchStoreProductsSortedByNameCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_STORE_PRODUCTS_SORTED_BY_PRODUCTS_NUM {
         {
             this.key = "POST:manager/storeProducts/searchSortedByProductsNum";
-            this.command = new SearchStoreProductsSortedByProductsNumCommand(Store_productService.getInstance());
+            this.command = new SearchStoreProductsSortedByProductsNumCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_STORE_PRODUCTS_SORTED_BY_PRODUCTS_NUM_CASHIER {
         {
             this.key = "POST:cashier/storeProducts/searchSortedByProductsNum";
-            this.command = new SearchStoreProductsSortedByProductsNumCommand(Store_productService.getInstance());
+            this.command = new SearchStoreProductsSortedByProductsNumCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
 
@@ -484,55 +484,55 @@ public enum CommandEnum {
     SEARCH_CHECK_BY_EMPLOYEE_ID {
         {
             this.key = "POST:manager/checks/searchByEmployeeId";
-            this.command = new SearchCheckByEmployeeIdCommand(CheckService.getInstance());
+            this.command = new SearchCheckByEmployeeIdCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     SEARCH_CHECK_BY_EMPLOYEE_ID_CASHIER {
         {
             this.key = "POST:cashier/checks/searchByEmployeeId";
-            this.command = new SearchCheckByEmployeeIdCommand(CheckService.getInstance());
+            this.command = new SearchCheckByEmployeeIdCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     SEARCH_CHECK_BY_NUMBER {
         {
             this.key = "POST:manager/checks/searchByNumber";
-            this.command = new SearchCheckByNumberCommand(CheckService.getInstance());
+            this.command = new SearchCheckByNumberCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     SEARCH_CHECK_BY_NUMBER_CASHIER {
         {
             this.key = "POST:cashier/checks/searchByNumber";
-            this.command = new SearchCheckByNumberCommand(CheckService.getInstance());
+            this.command = new SearchCheckByNumberCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     SEARCH_CHECKS_BY_EMPLOYEE_ID_PER_PERIOD {
         {
             this.key = "POST:manager/checks/searchByEmployeeIdPerPeriod";
-            this.command = new SearchChecksByEmployeeIdPerPeriodCommand(CheckService.getInstance());
+            this.command = new SearchChecksByEmployeeIdPerPeriodCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     SEARCH_CHECKS_BY_EMPLOYEE_ID_PER_PERIOD_CASHIER {
         {
             this.key = "POST:cashier/checks/searchByEmployeeIdPerPeriod";
-            this.command = new SearchChecksByEmployeeIdPerPeriodCommand(CheckService.getInstance());
+            this.command = new SearchChecksByEmployeeIdPerPeriodCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     SEARCH_CHECKS_BY_EMPLOYEE_SURNAME {
         {
             this.key = "POST:manager/checks/searchByEmployeeSurname";
-            this.command = new SearchChecksByEmployeeSurnameCommand(CheckService.getInstance());
+            this.command = new SearchChecksByEmployeeSurnameCommand(CheckService.getInstance(),Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     SEARCH_CHECKS_BY_EMPLOYEE_SURNAME_PER_PERIOD {
         {
             this.key = "POST:manager/checks/searchByEmployeeSurnamePerPeriod";
-            this.command = new SearchChecksByEmployeeSurnamePerPeriodCommand(CheckService.getInstance());
+            this.command = new SearchChecksByEmployeeSurnamePerPeriodCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     SEARCH_CHECKS_PER_PERIOD {
         {
             this.key = "POST:manager/checks/searchPerPeriod";
-            this.command = new SearchChecksPerPeriodCommand(CheckService.getInstance());
+            this.command = new SearchChecksPerPeriodCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     SEARCH_SUM_OF_CHECKS_BY_EMPLOYEE_SURNAME_PER_PERIOD {

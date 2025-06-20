@@ -41,6 +41,7 @@ public final class Attribute {
     public static final String PRINT_DATE = "print_date";
     public static final String CARD_NUMBER = "card_number";
     public static final String CUST_NAME = "cust_name";
+    public static final String CUST_SURNAME = "cust_surname";
     public static final String CUST_PATRONYMIC = "cust_patronymic";
     public static final String PERCENT = "percent";
     public static final String STORE_PRODUCTS = "store_products";

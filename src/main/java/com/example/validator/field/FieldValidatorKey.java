@@ -6,8 +6,7 @@ public enum FieldValidatorKey {
     NAME("name"),
     PATRONYMIC("patronymic"),
     SALARY("salary"),
-    DATE_OF_BIRTH("date_of_birth"),
-    DATE_OF_START("date_of_start"),
+    DATE("date"),
     PHONE_NUMBER("phone_number"),
     CITY("city"),
     STREET("street"),
@@ -29,13 +28,4 @@ public enum FieldValidatorKey {
     public String getValue() {
         return value;
     }
-
-//    public static Status forValue(String value) {
-//        for (final Status status : Status.values()) {
-//            if (status.getValue().equals(value)) {
-//                return status;
-//            }
-//        }
-//        throw new RuntimeException("FieldValidatorKey with such string value doesn't exist");
-//    }
 }

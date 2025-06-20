@@ -10,8 +10,7 @@ public final class FieldValidatorsChainGenerator {
         AbstractFieldValidatorHandler nameValidator = NameValidator.getInstance();
         AbstractFieldValidatorHandler patronymicValidator = PatronymicValidator.getInstance();
         AbstractFieldValidatorHandler salaryValidator = SalaryValidator.getInstance();
-        AbstractFieldValidatorHandler dateOfBirthValidator = DateOfBirthValidator.getInstance();
-        AbstractFieldValidatorHandler dateOfStartValidator = DateOfStartValidator.getInstance();
+        AbstractFieldValidatorHandler dateValidator = DateValidator.getInstance();
         AbstractFieldValidatorHandler phoneNumberValidator = PhoneNumberValidator.getInstance();
         AbstractFieldValidatorHandler cityValidator = CityValidator.getInstance();
         AbstractFieldValidatorHandler streetValidator = StreetValidator.getInstance();
@@ -28,9 +27,8 @@ public final class FieldValidatorsChainGenerator {
         surnameValidator.setNextFieldValidator(nameValidator);
         nameValidator.setNextFieldValidator(patronymicValidator);
         patronymicValidator.setNextFieldValidator(salaryValidator);
-        salaryValidator.setNextFieldValidator(dateOfBirthValidator);
-        dateOfBirthValidator.setNextFieldValidator(dateOfStartValidator);
-        dateOfStartValidator.setNextFieldValidator(phoneNumberValidator);
+        salaryValidator.setNextFieldValidator(dateValidator);
+        dateValidator.setNextFieldValidator(phoneNumberValidator);
         phoneNumberValidator.setNextFieldValidator(cityValidator);
         cityValidator.setNextFieldValidator(streetValidator);
         streetValidator.setNextFieldValidator(zipCodeValidator);
