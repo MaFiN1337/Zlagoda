@@ -233,7 +233,7 @@ public class JdbcCustomer_cardDao implements Customer_cardDao {
     protected static Customer_cardDiscountDto extractCustomer_cardDiscountInCategoriesResultSet(ResultSet resultSet) throws SQLException {
         return new Customer_cardDiscountDto.Builder().setCategoryName(resultSet.getString(CATEGORY_NAME))
                 .setTaxAmount(resultSet.getBigDecimal(DISCOUNT))
-                .setCategoryNumber(resultSet.getBigDecimal(CATEGORY_NUMBER)).build();
+                .setCategoryNumber(resultSet.getString(CATEGORY_NUMBER)).build();
     }
 
 }

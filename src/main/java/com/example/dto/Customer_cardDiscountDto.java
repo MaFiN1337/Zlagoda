@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 
 public class Customer_cardDiscountDto {
 
-    private BigDecimal categoryNumber;
-    private String categoryName;
+    private String cardNumber;
+    private String custSurname;
     private BigDecimal discount;
 
 
@@ -15,13 +15,13 @@ public class Customer_cardDiscountDto {
 
         private final Customer_cardDiscountDto customerCardDiscountDto = new Customer_cardDiscountDto();
 
-        public Customer_cardDiscountDto.Builder setCategoryNumber(BigDecimal categoryNumber) {
-            customerCardDiscountDto.categoryNumber = categoryNumber;
+        public Customer_cardDiscountDto.Builder setCategoryNumber(String categoryNumber) {
+            customerCardDiscountDto.cardNumber = categoryNumber;
             return this;
         }
 
         public Customer_cardDiscountDto.Builder setCategoryName(String categoryName) {
-            customerCardDiscountDto.categoryName = categoryName;
+            customerCardDiscountDto.custSurname = categoryName;
             return this;
         }
 
@@ -35,12 +35,12 @@ public class Customer_cardDiscountDto {
         }
 
     }
-    public String getCategoryName() {
-        return categoryName;
+    public String getCustSurname() {
+        return custSurname;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCustSurname(String custSurname) {
+        this.custSurname = custSurname;
     }
 
     public BigDecimal getTaxAmount() {
@@ -51,12 +51,12 @@ public class Customer_cardDiscountDto {
         this.discount = discount;
     }
 
-    public BigDecimal getCategoryNumber() {
-        return categoryNumber;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public void setCategoryNumber(BigDecimal categoryNumber) {
-        this.categoryNumber = categoryNumber;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public Customer_cardDiscountDto() { }

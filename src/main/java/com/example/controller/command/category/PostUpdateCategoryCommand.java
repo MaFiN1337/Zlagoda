@@ -1,7 +1,6 @@
 package com.example.controller.command.category;
 
 import com.example.constants.Attribute;
-import com.example.constants.Page;
 import com.example.constants.ServletPath;
 import com.example.controller.command.Command;
 import com.example.controller.utils.HttpWrapper;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PostUpdateCategoryCommand implements Command {
@@ -30,25 +28,15 @@ public class PostUpdateCategoryCommand implements Command {
             throws ServletException, IOException {
 
         Category category = getUserInput(request);
-        List<String> errors = validateUserInput(category);
 
-        if (errors.isEmpty()) {
-            categoryService.updateCategory(category);
-            redirectToAllCategoriesPageWithSuccessMessage(request, response);
-            return RedirectionManager.REDIRECTION;
-        }
-
-        addRequestAttributes(request, category, errors);
-        return Page.ADD_UPDATE_CATEGORY_VIEW;
+        categoryService.updateCategory(category);
+        redirectToAllCategoriesPageWithSuccessMessage(request, response);
+        return RedirectionManager.REDIRECTION;
     }
 
     private Category getUserInput(HttpServletRequest request) {
         return new Category.Builder().setId(Long.parseLong(request.getParameter(Attribute.CATEGORY_NUMBER)))
                 .setName(request.getParameter(Attribute.CATEGORY_NAME)).build();
-    }
-
-    private List<String> validateUserInput(Category category) {
-        return CategoryValidator.getInstance().validate(category);
     }
 
     private void redirectToAllCategoriesPageWithSuccessMessage(HttpServletRequest request, HttpServletResponse response)
@@ -57,10 +45,5 @@ public class PostUpdateCategoryCommand implements Command {
         Map<String, String> urlParams = new HashMap<>();
         urlParams.put(Attribute.SUCCESS, Message.SUCCESS_CATEGORY_UPDATE);
         RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_CATEGORIES, urlParams);
-    }
-
-    private void addRequestAttributes(HttpServletRequest request, Category category, List<String> errors) {
-        request.setAttribute(Attribute.CATEGORY, category);
-        request.setAttribute(Attribute.ERRORS, errors);
     }
 }

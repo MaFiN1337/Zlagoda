@@ -50,6 +50,10 @@ public final class Attribute {
     public static final String PRODUCTS_NUMBER = "products_number";
     public static final String SELLING_PRICE = "selling_price";
     public static final String PROMO_PRODUCT = "promotional_product";
+    public static final String DETAILS = "details";
+    public static final String DISCOUNTS = "discounts";
+    public static final String SUM = "sum";
+
 
     public static final String FROM_DATE = "fromDate";
     public static final String TO_DATE = "toDate";

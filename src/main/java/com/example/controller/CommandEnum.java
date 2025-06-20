@@ -4,15 +4,11 @@ import com.example.controller.command.Command;
 import com.example.controller.command.HomeCommand;
 import com.example.controller.command.PageNotFoundCommand;
 import com.example.controller.command.category.*;
-import com.example.controller.command.employee.*;
 import com.example.controller.command.check.*;
-import com.example.controller.command.store_product.*;
 import com.example.controller.command.customer_card.*;
+import com.example.controller.command.employee.*;
 import com.example.controller.command.product.*;
-import com.example.controller.command.product.DeleteProductCommand;
-import com.example.controller.command.product.GetUpdateProductCommand;
-import com.example.controller.command.product.PostAddProductCommand;
-import com.example.controller.command.product.PostUpdateProductCommand;
+import com.example.controller.command.store_product.*;
 import com.example.service.*;
 
 public enum CommandEnum {
@@ -281,7 +277,7 @@ public enum CommandEnum {
     GET_ADD_PRODUCT {
         {
             this.key = "GET:manager/products/addProduct";
-            this.command = new GetAddProductCommand();
+            this.command = new GetAddProductCommand(CategoryService.getInstance());
         }
     },
     POST_ADD_PRODUCT {
@@ -388,11 +384,10 @@ public enum CommandEnum {
             this.command = new SearchCategoriesWithAllProductsInStoreProductCommand(CategoryService.getInstance());
         }
     },
-    // Additional Store Products Commands
     SEARCH_AMOUNT_OF_STORE_PRODUCT_PER_PERIOD {
         {
             this.key = "POST:manager/storeProducts/searchAmountPerPeriod";
-            this.command = new SearchAmountOfStoreProductPerPeriodCommand(Store_productService.getInstance());
+            this.command = new SearchAmountOfStoreProductPerPeriodCommand(CheckService.getInstance());
         }
     },
     SEARCH_NON_PROMO_STORE_PRODUCTS_SORTED_BY_NAME {
@@ -410,13 +405,13 @@ public enum CommandEnum {
     SEARCH_NON_PROMO_STORE_PRODUCTS_SORTED_BY_PRODUCT_NUM {
         {
             this.key = "POST:manager/storeProducts/searchNonPromoByProductNum";
-            this.command = new SearchNonPromoStoreProductsSortedByProductNumCommand(Store_productService.getInstance());
+            this.command = new SearchNonPromoStoreProductsSortedByProductNumCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_NON_PROMO_STORE_PRODUCTS_SORTED_BY_PRODUCT_NUM_CASHIER {
         {
             this.key = "POST:cashier/storeProducts/searchNonPromoByProductNum";
-            this.command = new SearchNonPromoStoreProductsSortedByProductNumCommand(Store_productService.getInstance());
+            this.command = new SearchNonPromoStoreProductsSortedByProductNumCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     SEARCH_PROMO_STORE_PRODUCTS_SORTED_BY_NAME {
@@ -480,7 +475,6 @@ public enum CommandEnum {
         }
     },
 
-    // Additional Checks Commands
     SEARCH_CHECK_BY_EMPLOYEE_ID {
         {
             this.key = "POST:manager/checks/searchByEmployeeId";
