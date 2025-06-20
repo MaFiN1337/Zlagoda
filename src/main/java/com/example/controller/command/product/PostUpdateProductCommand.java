@@ -33,16 +33,9 @@ public class PostUpdateProductCommand implements Command {
             throws ServletException, IOException {
 
         Product product = getUserInput(request);
-//        List<String> errors = validateUserInput(product);
-//
-//        if (errors.isEmpty()) {
             productService.updateProduct(product);
             redirectToAllProductsPageWithSuccessMessage(request, response);
             return RedirectionManager.REDIRECTION;
-//        }
-//
-//        addRequestAttributes(request, product, errors);
-//        return Page.ADD_UPDATE_PRODUCT_VIEW;
     }
 
     private Product getUserInput(HttpServletRequest request) {
@@ -54,21 +47,13 @@ public class PostUpdateProductCommand implements Command {
                 .build();
     }
 
-//    private List<String> validateUserInput(Product product) {
-//        return ProductValidator.getInstance().validate(product);
-//    }
 
     private void redirectToAllProductsPageWithSuccessMessage(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams = new HashMap<>();
         urlParams.put(Attribute.SUCCESS, Message.SUCCESS_PRODUCT_UPDATE);
-        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_PRODUCTS, urlParams);
+        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_PRODUCTS, urlParams);
     }
 
-//    private void addRequestAttributes(HttpServletRequest request, Product product, List<String> errors) {
-//        request.setAttribute(Attribute.CATEGORIES, categoryService.getAllCategories());
-//        request.setAttribute(Attribute.PRODUCT, product);
-//        request.setAttribute(Attribute.ERRORS, errors);
-//    }
 }

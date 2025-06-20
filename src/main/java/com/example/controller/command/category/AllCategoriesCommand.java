@@ -23,7 +23,6 @@ public class AllCategoriesCommand implements Command{
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Category> categories = categoryService.getAllCategories();
-
         request.setAttribute(Attribute.CATEGORIES, categories);
         return Page.ALL_CATEGORIES_VIEW;
     }

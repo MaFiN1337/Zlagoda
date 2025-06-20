@@ -44,7 +44,7 @@ public class SearchCustomerCardDiscountForEachCategoryCommand implements Command
         if (discounts.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.DISCOUNT_IS_NOT_FOUND);
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_CUSTOMER_CARDS, urlParams);
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CUSTOMER_CARDS, urlParams);
             return RedirectionManager.REDIRECTION;
         }
 

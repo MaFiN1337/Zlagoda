@@ -42,7 +42,7 @@ public class SearchAmountOfStoreProductPerPeriodCommand implements Command {
         if (!errors.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, errors.get(0));
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_CHECKS, urlParams);
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CHECKS, urlParams);
             return RedirectionManager.REDIRECTION;
         }
 
@@ -52,7 +52,7 @@ public class SearchAmountOfStoreProductPerPeriodCommand implements Command {
         if (!sum.isPresent()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.PRODUCT_IS_NOT_FOUND);
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_CHECKS, urlParams);
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CHECKS, urlParams);
             return RedirectionManager.REDIRECTION;
         }
 

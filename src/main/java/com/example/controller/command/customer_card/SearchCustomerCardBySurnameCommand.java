@@ -42,7 +42,7 @@ public class SearchCustomerCardBySurnameCommand implements Command {
         if (!errors.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, errors.get(0));
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_CUSTOMER_CARDS, urlParams);
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CUSTOMER_CARDS, urlParams);
             return RedirectionManager.REDIRECTION;
         }
 
@@ -51,7 +51,7 @@ public class SearchCustomerCardBySurnameCommand implements Command {
         if (customer_cards.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.CUSTOMER_CARD_IS_NOT_FOUND);
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_CUSTOMER_CARDS, urlParams);
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CUSTOMER_CARDS, urlParams);
             return RedirectionManager.REDIRECTION;
         }
 

@@ -40,7 +40,7 @@ public class SearchEmployeeSumOfVatForEachCategoryCommand implements Command {
         if (!errors.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, errors.get(0));
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_EMPLOYEES, urlParams);
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_EMPLOYEES, urlParams);
             return RedirectionManager.REDIRECTION;
         }
 
@@ -50,7 +50,7 @@ public class SearchEmployeeSumOfVatForEachCategoryCommand implements Command {
         if (summaryDtos.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.EMPLOYEE_IS_NOT_FOUND);
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_EMPLOYEES, urlParams);
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_EMPLOYEES, urlParams);
             return RedirectionManager.REDIRECTION;
         }
 

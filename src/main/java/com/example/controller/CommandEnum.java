@@ -25,7 +25,6 @@ public enum CommandEnum {
             this.command = new HomeCommand();
         }
     },
-    // Categories Commands
     ALL_CATEGORIES {
         {
             this.key = "GET:manager/categories";
@@ -580,6 +579,7 @@ public enum CommandEnum {
     }
 
     public static Command getCommand(String key) {
+
         for (final CommandEnum command : CommandEnum.values()) {
             if (command.getKey().equals(key)) {
                 return command.getCommand();

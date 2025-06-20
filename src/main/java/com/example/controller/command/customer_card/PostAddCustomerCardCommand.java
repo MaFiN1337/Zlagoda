@@ -48,7 +48,7 @@ public class PostAddCustomerCardCommand implements Command {
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams = new HashMap<>();
         urlParams.put(Attribute.SUCCESS, Message.SUCCESS_CUSTOMER_CARD_ADDITION);
-        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_CUSTOMER_CARDS, urlParams);
+        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CUSTOMER_CARDS, urlParams);
     }
 
 }

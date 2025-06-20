@@ -38,6 +38,6 @@ public class DeleteCategoryCommand implements Command {
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams = new HashMap<>();
         urlParams.put(Attribute.SUCCESS, Message.SUCCESS_CATEGORY_DELETE);
-        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_CATEGORIES, urlParams);
+        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CATEGORIES, urlParams);
     }
 }

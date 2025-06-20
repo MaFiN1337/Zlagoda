@@ -32,16 +32,9 @@ public class PostAddEmployeeCommand implements Command {
             throws ServletException, IOException {
 
         Employee employee = getUserInput(request);
-//        List<String> errors = validateUserInput(employee);
-
-//        if (errors.isEmpty()) {
             employeeService.createEmployee(employee);
             redirectToAllEmployeesPageWithSuccessMessage(request, response);
             return RedirectionManager.REDIRECTION;
-//        }
-
-//        addRequestAttributes(request, employee, errors);
-//        return Page.ADD_UPDATE_EMPLOYEE_VIEW;
     }
 
     private Employee getUserInput(HttpServletRequest request) {
@@ -53,20 +46,12 @@ public class PostAddEmployeeCommand implements Command {
                 .setZip_code(request.getParameter(Attribute.ZIP_CODE)).build();
     }
 
-//    private List<String> validateUserInput(Employee employee) {
-//        return EmployeeValidator.getInstance().validate(employee);
-//    }
 
     private void redirectToAllEmployeesPageWithSuccessMessage(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams = new HashMap<>();
         urlParams.put(Attribute.SUCCESS, Message.SUCCESS_EMPLOYEE_ADDITION);
-        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_EMPLOYEES, urlParams);
+        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_EMPLOYEES, urlParams);
     }
-
-//    private void addRequestAttributes(HttpServletRequest request, Employee employee, List<String> errors) {
-//        request.setAttribute(Attribute.EMPLOYEE, employee);
-//        request.setAttribute(Attribute.ERRORS, errors);
-//    }
 }

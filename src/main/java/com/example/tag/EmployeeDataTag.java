@@ -1,7 +1,6 @@
 package com.example.tag;
 
 import com.example.entity.Employee;
-import com.example.locale.Message;
 import com.example.locale.MessageLocale;
 import com.example.locale.MessageUtils;
 
@@ -27,7 +26,7 @@ public class EmployeeDataTag extends TagSupport {
     }
 
     private String showEmployeeData() {
-        return new StringBuffer().append(MessageLocale.BUNDLE.getString(Message.LOGGED_IN_AS)).append(employee.getPhone())
+        return new StringBuffer().append(employee.getPhone())
                 .append(MessageUtils.LEFT_PARENTHESIS)
                 .append(MessageLocale.BUNDLE.getString(employee.getRole().getLocalizedValue()))
                 .append(MessageUtils.RIGHT_PARANTHESIS).toString();

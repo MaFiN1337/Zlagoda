@@ -42,7 +42,7 @@ public class SearchCategoriesByNameCommand implements Command {
         if (!errors.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, errors.get(0));
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_CATEGORIES, urlParams);
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CATEGORIES, urlParams);
             return RedirectionManager.REDIRECTION;
         }
 
@@ -51,7 +51,7 @@ public class SearchCategoriesByNameCommand implements Command {
         if (categories.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.CATEGORY_IS_NOT_FOUND);
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_CATEGORIES, urlParams);
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CATEGORIES, urlParams);
             return RedirectionManager.REDIRECTION;
         }
 

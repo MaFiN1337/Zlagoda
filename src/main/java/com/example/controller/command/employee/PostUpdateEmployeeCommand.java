@@ -63,7 +63,7 @@ public class PostUpdateEmployeeCommand implements Command {
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams = new HashMap<>();
         urlParams.put(Attribute.SUCCESS, Message.SUCCESS_EMPLOYEE_UPDATE);
-        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_EMPLOYEES, urlParams);
+        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_EMPLOYEES, urlParams);
     }
 
 //    private void addRequestAttributes(HttpServletRequest request, Employee employee, List<String> errors) {

@@ -44,7 +44,7 @@ public class SearchStoreProductsSortedByProductsNumCommand implements Command {
         if (storeProducts.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.STORE_PRODUCT_IS_NOT_FOUND);
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.ALL_STORE_PRODUCTS, urlParams);
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_STORE_PRODUCTS, urlParams);
             return RedirectionManager.REDIRECTION;
         }
 
