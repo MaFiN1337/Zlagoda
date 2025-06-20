@@ -40,13 +40,21 @@ public class SearchNonPromoStoreProductsSortedByProductNumCommand implements Com
         List<Store_product> storeProducts = storeProductService.searchNonPromotionalStore_productSortedByProductsNum();
         List<Product> products = productService.getAllProducts();
 
-
+        String uri = request.getRequestURI();
+        String afterController = uri.substring(uri.indexOf("/controller/") + "/controller/".length());
+        String firstSegment = afterController.contains("/")
+                ? afterController.substring(0, afterController.indexOf("/"))
+                : afterController;
 
         if (storeProducts.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.STORE_PRODUCT_IS_NOT_FOUND);
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_STORE_PRODUCTS, urlParams);
-            return RedirectionManager.REDIRECTION;
+            if (firstSegment.equals("manager")){
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_STORE_PRODUCTS, urlParams);
+            }
+            else {
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.CASHIER_STORE_PRODUCTS, urlParams);
+            }             return RedirectionManager.REDIRECTION;
         }
 
         request.setAttribute(Attribute.STORE_PRODUCTS, storeProducts);

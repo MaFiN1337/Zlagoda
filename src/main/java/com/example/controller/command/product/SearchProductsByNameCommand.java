@@ -41,12 +41,21 @@ public class SearchProductsByNameCommand implements Command {
         List<String> errors = validateUserInput(name);
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams;
+        String uri = request.getRequestURI();
+        String afterController = uri.substring(uri.indexOf("/controller/") + "/controller/".length());
+        String firstSegment = afterController.contains("/")
+                ? afterController.substring(0, afterController.indexOf("/"))
+                : afterController;
 
         if (!errors.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, errors.get(0));
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_PRODUCTS, urlParams);
-            return RedirectionManager.REDIRECTION;
+            if (firstSegment.equals("manager")){
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_PRODUCTS, urlParams);
+            }
+            else {
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.CASHIER_PRODUCTS, urlParams);
+            }            return RedirectionManager.REDIRECTION;
         }
 
         List<Product> products= productService.searchProductsByName(name);
@@ -54,7 +63,12 @@ public class SearchProductsByNameCommand implements Command {
         if (products.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.PRODUCT_IS_NOT_FOUND);
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_PRODUCTS, urlParams);
+            if (firstSegment.equals("manager")){
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_PRODUCTS, urlParams);
+            }
+            else {
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.CASHIER_PRODUCTS, urlParams);
+            }
             return RedirectionManager.REDIRECTION;
         }
 

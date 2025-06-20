@@ -48,7 +48,16 @@ public class PostAddCustomerCardCommand implements Command {
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams = new HashMap<>();
         urlParams.put(Attribute.SUCCESS, Message.SUCCESS_CUSTOMER_CARD_ADDITION);
-        RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CUSTOMER_CARDS, urlParams);
-    }
+        String uri = request.getRequestURI();
+        String afterController = uri.substring(uri.indexOf("/controller/") + "/controller/".length());
+        String firstSegment = afterController.contains("/")
+                ? afterController.substring(0, afterController.indexOf("/"))
+                : afterController;
+        if (firstSegment.equals("manager")){
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_PRODUCTS, urlParams);
+        }
+        else {
+            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.CASHIER_PRODUCTS, urlParams);
+        }    }
 
 }

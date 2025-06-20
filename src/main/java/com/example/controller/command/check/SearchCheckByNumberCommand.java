@@ -40,12 +40,21 @@ public class SearchCheckByNumberCommand implements Command {
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams;
         Optional<Check> check = checkService.searchCheckByNumber(check_number);
+        String uri = request.getRequestURI();
+        String afterController = uri.substring(uri.indexOf("/controller/") + "/controller/".length());
+        String firstSegment = afterController.contains("/")
+                ? afterController.substring(0, afterController.indexOf("/"))
+                : afterController;
 
         if (!check.isPresent()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.CHECK_IS_NOT_FOUND);
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CHECKS, urlParams);
-            return RedirectionManager.REDIRECTION;
+            if (firstSegment.equals("manager")){
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CHECKS, urlParams);
+            }
+            else {
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.CASHIER_CHECKS, urlParams);
+            }            return RedirectionManager.REDIRECTION;
         }
 
         request.setAttribute(Attribute.CHECK, check);

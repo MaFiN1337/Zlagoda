@@ -46,12 +46,21 @@ public class SearchChecksByEmployeeSurnamePerPeriodCommand implements Command {
         String toDate = request.getParameter(Attribute.TO_DATE);
         List<String> errors = validateUserInput(empl_surname, fromDate, toDate);
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
+        String uri = request.getRequestURI();
+        String afterController = uri.substring(uri.indexOf("/controller/") + "/controller/".length());
+        String firstSegment = afterController.contains("/")
+                ? afterController.substring(0, afterController.indexOf("/"))
+                : afterController;
         Map<String, String> urlParams;
         if (!errors.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, errors.get(0));
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CHECKS, urlParams);
-            return RedirectionManager.REDIRECTION;
+            if (firstSegment.equals("manager")){
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_PRODUCTS, urlParams);
+            }
+            else {
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.CASHIER_PRODUCTS, urlParams);
+            }            return RedirectionManager.REDIRECTION;
         }
 
         List<Check> checks = checkService.searchChecksByEmployeeSurnamePerPeriod(empl_surname, LocalDate.parse(fromDate), LocalDate.parse(toDate));
@@ -59,8 +68,12 @@ public class SearchChecksByEmployeeSurnamePerPeriodCommand implements Command {
         if (checks.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.CHECK_IS_NOT_FOUND);
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CHECKS, urlParams);
-            return RedirectionManager.REDIRECTION;
+            if (firstSegment.equals("manager")){
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_CHECKS, urlParams);
+            }
+            else {
+                RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.CASHIER_CHECKS, urlParams);
+            }            return RedirectionManager.REDIRECTION;
         }
 
         request.setAttribute(Attribute.CHECK, checks);
