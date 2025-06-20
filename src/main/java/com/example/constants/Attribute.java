@@ -33,8 +33,22 @@ public final class Attribute {
     public static final String EMPLOYEE_NAME = "employee_name";
     public static final String EMPLOYEE_SURNAME = "employee_surname";
     public static final String SUMMARY_DTOS = "summary_dtos";
-
-
+    public static final String CHECKS = "checks";
+    public static final String CUSTOMER_CARDS = "customer_cards";
+    public static final String CHECK_NUMBER = "check_number";
+    public static final String CHECK = "check";
+    public static final String CUSTOMER_CARD = "customer_card";
+    public static final String PRINT_DATE = "print_date";
+    public static final String CARD_NUMBER = "card_number";
+    public static final String CUST_NAME = "cust_name";
+    public static final String CUST_PATRONYMIC = "cust_patronymic";
+    public static final String PERCENT = "percent";
+    public static final String STORE_PRODUCTS = "store_products";
+    public static final String UPC = "upc";
+    public static final String STORE_PRODUCT = "store_product";
+    public static final String PRODUCTS_NUMBER = "products_number";
+    public static final String SELLING_PRICE = "selling_price";
+    public static final String PROMO_PRODUCT = "promotional_product";
 
     public static final String FROM_DATE = "fromDate";
     public static final String TO_DATE = "toDate";

@@ -27,10 +27,10 @@ public class AllProductsCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Product> dishes = productService.getAllProducts();
+        List<Product> products = productService.getAllProducts();
         List<Category> categories = categoryService.getAllCategories();
 
-        request.setAttribute(Attribute.PRODUCTS, dishes);
+        request.setAttribute(Attribute.PRODUCTS, products);
         request.setAttribute(Attribute.CATEGORIES, categories);
         return Page.ALL_PRODUCTS_VIEW;
     }

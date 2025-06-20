@@ -29,10 +29,10 @@ public class GetUpdateProductCommand implements Command {
             throws ServletException, IOException {
         Long productId = Long.parseLong(request.getParameter(Attribute.ID_PRODUCT));
 
-        Optional<Product> dish = productService.getProductById(productId);
+        Optional<Product> product = productService.getProductById(productId);
 
         request.setAttribute(Attribute.CATEGORIES, categoryService.getAllCategories());
-        request.setAttribute(Attribute.PRODUCT, dish.get());
+        request.setAttribute(Attribute.PRODUCT, product.get());
         return Page.ADD_UPDATE_PRODUCT_VIEW;
     }
 }

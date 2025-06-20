@@ -66,14 +66,14 @@ public class CheckService {
         }
     }
 
-    public void updateCategory(Check check) {
+    public void updateCheck(Check check) {
         LOGGER.info(String.format(UPDATE_CHECK, check.getNumber()));
         try (CheckDao checkDao = daoFactory.createCheckDao()) {
             checkDao.update(check);
         }
     }
 
-    public void deleteCategory(String checkNumber) {
+    public void deleteCheck(String checkNumber) {
         LOGGER.info(String.format(DELETE_CHECK, checkNumber));
         try (CheckDao checkDao = daoFactory.createCheckDao()) {
             checkDao.delete(checkNumber);

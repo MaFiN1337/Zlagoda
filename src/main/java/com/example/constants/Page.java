@@ -18,8 +18,6 @@ public final class Page {
     public static final String ADD_UPDATE_STORE_PRODUCT_VIEW = PREFIX + "addUpdateStoreProduct" + SUFFIX;
     public static final String ALL_CHECKS_VIEW = PREFIX + "allChecks" + SUFFIX;
     public static final String ADD_UPDATE_CHECK_VIEW = PREFIX + "addUpdateCheck" + SUFFIX;
-    public static final String ALL_SALES_VIEW = PREFIX + "allSales" + SUFFIX;
-    public static final String ADD_UPDATE_SALE_VIEW = PREFIX + "addUpdateSale" + SUFFIX;
     public static final String ALL_CUSTOMER_CARDS_VIEW = PREFIX + "allCustomerCards" + SUFFIX;
     public static final String ADD_UPDATE_CUSTOMER_CARD_VIEW = PREFIX + "addUpdateCustomerCard" + SUFFIX;
     public static final String ALL_CATEGORIES_VIEW = PREFIX + "allCategories" + SUFFIX;

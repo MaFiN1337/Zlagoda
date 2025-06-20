@@ -145,7 +145,7 @@ public enum CommandEnum {
     ALL_CHECKS {
         {
             this.key = "GET:manager/checks";
-            this.command = new AllChecksCommand(CheckService.getInstance());
+            this.command = new AllChecksCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     DELETE_CHECK {
@@ -157,37 +157,37 @@ public enum CommandEnum {
     GET_ADD_CHECK {
         {
             this.key = "GET:manager/checks/addCheck";
-            this.command = new GetAddCheckCommand();
+            this.command = new GetAddCheckCommand(CheckService.getInstance());
         }
     },
     GET_ADD_CHECK_CASHIER {
         {
             this.key = "GET:cashier/checks/addCheck";
-            this.command = new GetAddCheckCommand();
+            this.command = new GetAddCheckCommand(CheckService.getInstance());
         }
     },
     POST_ADD_CHECK {
         {
             this.key = "POST:manager/checks/addCheck";
-            this.command = new PostAddCheckCommand(CheckService.getInstance());
+            this.command = new PostAddCheckCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     POST_ADD_CHECK_CASHIER {
         {
             this.key = "POST:cashier/checks/addCheck";
-            this.command = new PostAddCheckCommand(CheckService.getInstance());
+            this.command = new PostAddCheckCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     GET_UPDATE_CHECK {
         {
             this.key = "GET:manager/checks/updateCheck";
-            this.command = new GetUpdateCheckCommand(CheckService.getInstance());
+            this.command = new GetUpdateCheckCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
     POST_UPDATE_CHECK {
         {
             this.key = "POST:manager/checks/updateCheck";
-            this.command = new PostUpdateCheckCommand(CheckService.getInstance());
+            this.command = new PostUpdateCheckCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
 
@@ -195,19 +195,19 @@ public enum CommandEnum {
     ALL_CUSTOMER_CARDS {
         {
             this.key = "GET:manager/customerCards";
-            this.command = new AllCustomerCardsCommand(CustomerCardService.getInstance());
+            this.command = new AllCustomerCardsCommand(Customer_cardService.getInstance());
         }
     },
     ALL_CUSTOMER_CARDS_CASHIER {
         {
             this.key = "GET:cashier/customerCards";
-            this.command = new AllCustomerCardsCommand(CustomerCardService.getInstance());
+            this.command = new AllCustomerCardsCommand(Customer_cardService.getInstance());
         }
     },
     DELETE_CUSTOMER_CARD {
         {
             this.key = "GET:manager/customerCards/deleteCustomerCard";
-            this.command = new DeleteCustomerCardCommand(CustomerCardService.getInstance());
+            this.command = new DeleteCustomerCardCommand(Customer_cardService.getInstance());
         }
     },
     GET_ADD_CUSTOMER_CARD {
@@ -225,19 +225,19 @@ public enum CommandEnum {
     POST_ADD_CUSTOMER_CARD {
         {
             this.key = "POST:manager/customerCards/addCustomerCard";
-            this.command = new PostAddCustomerCardCommand(Customer_CardService.getInstance());
+            this.command = new PostAddCustomerCardCommand(Customer_cardService.getInstance());
         }
     },
     POST_ADD_CUSTOMER_CARD_CASHIER {
         {
             this.key = "POST:cashier/customerCards/addCustomerCard";
-            this.command = new PostAddCustomerCardCommand(Customer_CardService.getInstance());
+            this.command = new PostAddCustomerCardCommand(Customer_cardService.getInstance());
         }
     },
     GET_UPDATE_CUSTOMER_CARD {
         {
             this.key = "GET:manager/customerCards/updateCustomerCard";
-            this.command = new GetUpdateCustomerCardCommand(Customer_CardService.getInstance());
+            this.command = new GetUpdateCustomerCardCommand(Customer_cardService.getInstance());
         }
     },
     GET_UPDATE_CUSTOMER_CARD_CASHIER {
@@ -343,13 +343,13 @@ public enum CommandEnum {
     ALL_STORE_PRODUCTS {
         {
             this.key = "GET:manager/storeProducts";
-            this.command = new AllStoreProductCommand();
+            this.command = new AllStoreProductCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     ALL_STORE_PRODUCTS_CASHIER {
         {
             this.key = "GET:cashier/storeProducts";
-            this.command = new AllStoreProductCommand();
+            this.command = new AllStoreProductCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     DELETE_STORE_PRODUCT {
@@ -361,19 +361,19 @@ public enum CommandEnum {
     GET_ADD_STORE_PRODUCT {
         {
             this.key = "GET:manager/storeProducts/addStoreProduct";
-            this.command = new GetAddStoreProductCommand();
+            this.command = new GetAddStoreProductCommand(Store_productService.getInstance());
         }
     },
     POST_ADD_STORE_PRODUCT {
         {
             this.key = "POST:manager/storeProducts/addStoreProduct";
-            this.command = new PostAddStoreProductCommand(Store_productService.getInstance());
+            this.command = new PostAddStoreProductCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     GET_UPDATE_STORE_PRODUCT {
         {
             this.key = "GET:manager/storeProducts/updateStoreProduct";
-            this.command = new GetUpdateStoreProductCommand(Store_productService.getInstance());
+            this.command = new GetUpdateStoreProductCommand(Store_productService.getInstance(), ProductService.getInstance());
         }
     },
     POST_UPDATE_STORE_PRODUCT {

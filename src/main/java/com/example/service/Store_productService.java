@@ -47,28 +47,28 @@ public class Store_productService {
         }
     }
 
-    public Optional<Store_product> getCheckById(String UPC) {
+    public Optional<Store_product> getStore_productById(String UPC) {
         LOGGER.info(String.format(GET_STORE_PRODUCT_BY_ID, UPC));
         try (Store_productDao storeProductDao = daoFactory.createStore_productDao()) {
             return storeProductDao.getById(UPC);
         }
     }
 
-    public void createCheck(Store_product storeProduct) {
+    public void createStore_product(Store_product storeProduct) {
         LOGGER.info(String.format(CREATE_STORE_PRODUCT, storeProduct.getUpc()));
         try (Store_productDao storeProductDao = daoFactory.createStore_productDao()) {
             storeProductDao.create(storeProduct);
         }
     }
 
-    public void updateCategory(Store_product storeProduct) {
+    public void updateStore_product(Store_product storeProduct) {
         LOGGER.info(String.format(UPDATE_STORE_PRODUCT, storeProduct.getUpc()));
         try (Store_productDao storeProductDao = daoFactory.createStore_productDao()) {
             storeProductDao.update(storeProduct);
         }
     }
 
-    public void deleteCategory(String store_productNumber) {
+    public void deleteStore_product(String store_productNumber) {
         LOGGER.info(String.format(DELETE_STORE_PRODUCT, store_productNumber));
         try (Store_productDao storeProductDao = daoFactory.createStore_productDao()) {
             storeProductDao.delete(store_productNumber);
