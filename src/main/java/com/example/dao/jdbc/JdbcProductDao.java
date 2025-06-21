@@ -16,8 +16,8 @@ public class JdbcProductDao implements ProductDao {
     private static final Logger LOGGER = LogManager.getLogger(JdbcCategoryDao.class);
 
     private static final String GET_ALL = "SELECT pr.*, cat.category_name FROM `Product` pr " +
-            "INNER JOIN `Category`cat ON pr.category_number=cat.category_number" +
-            "ORDER BY product_name";
+            "INNER JOIN `Category` cat ON pr.category_number=cat.category_number" +
+            " ORDER BY pr.product_name";
     private static final String GET_BY_ID = "SELECT pr.*, cat.category_name FROM `Product` pr" +
             "INNER JOIN `Category`cat ON pr.category_number=cat.category_number" +
             "WHERE id_product=?";
@@ -33,7 +33,7 @@ public class JdbcProductDao implements ProductDao {
     private static final String SEARCH_PRODUCT_BY_CATEGORY_AND_SORTED_BY_NAME = "SELECT p.*, c.category_name FROM Product p JOIN Category c ON p.category_number = c.category_number WHERE LOWER(c.category_name) LIKE CONCAT('%', LOWER(?), '%') ORDER BY p.product_name";
 
     private static final String ID = "id_product";
-    private static final String NAME = "Product.product_name";
+    private static final String NAME = "product_name";
     private static final String CHARACTERISTICS = "characteristics";
     private static final String CATEGORY = "category_number";
 
@@ -56,17 +56,17 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     public List<Product> getAll() {
-        List<Product> categories = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
 
         try (Statement query = connection.createStatement(); ResultSet resultSet = query.executeQuery(GET_ALL)) {
             while (resultSet.next()) {
-                categories.add(extractProductFromResultSet(resultSet));
+                products.add(extractProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             LOGGER.error("JdbcProductDao getAll SQL exception", e);
             throw new ServerException(e);
         }
-        return categories;
+        return products;
     }
 
     @Override

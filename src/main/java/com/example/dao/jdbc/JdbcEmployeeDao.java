@@ -22,25 +22,25 @@ public class JdbcEmployeeDao implements EmployeeDao {
     private static final String CREATE = "INSERT INTO `employee`"
             + " (empl_name, empl_surname, empl_patronymic, salary, phone_number, empl_role, date_of_birth, date_of_start, city, street, zip_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE `employee`"
-            + " SET empl_name=?, empl_surname=?, empl_patronymic=?, salary=?, phone_number=?, phone_number=?, empl_role=?, date_of_birth=?, date_of_start=?, city=?, street=?, zip_code=?" + " WHERE id_employee=? ";
+            + " SET empl_name=?, empl_surname=?, empl_patronymic=?, salary=?, phone_number=?, empl_role=?, date_of_birth=?, date_of_start=?, city=?, street=?, zip_code=?" + " WHERE id_employee=? ";
     private static final String DELETE = "DELETE FROM `employee` WHERE id_employee=?";
     private static final String SEARCH_EMPLOYEES_BY_SURNAME = "SELECT * FROM `employee` WHERE LOWER(empl_surname) LIKE CONCAT('%', LOWER(?), '%')";
     private static final String SEARCH_EMPLOYEE_CASHIERS_SORTED_BY_SURNAME = "SELECT * FROM `Employee` WHERE empl_role = 'cashier'"
             + "ORDER BY empl_surname";
     private static final String SEARCH_EMPLOYEE_SUM_OF_VATS_FOR_EACH_CATEGORY =
-            "SELECT c.category_number, c.category_name,SUM(s.selling_price) * 0.2 AS total_tax" +
-            "FROM Employee e" +
-            "         INNER JOIN Check_table ct ON e.id_employee = ct.id_employee" +
-            "         INNER JOIN Sale s ON ct.check_number = s.check_number" +
-            "         INNER JOIN Store_product sp ON s.UPC = sp.UPC" +
-            "         INNER JOIN Product p ON sp.id_product = p.id_product" +
-            "         INNER JOIN Category c ON p.category_number = c.category_number" +
-            "WHERE e.id_employee = ?" +
-            "GROUP BY c.category_number, c.category_name";
+            "SELECT c.category_number, c.category_name,SUM(s.selling_price) * 0.2 AS tax_amount" +
+            " FROM Employee e" +
+            " INNER JOIN Check_table ct ON e.id_employee = ct.id_employee" +
+            " INNER JOIN Sale s ON ct.check_number = s.check_number" +
+            " INNER JOIN Store_product sp ON s.UPC = sp.UPC" +
+            " INNER JOIN Product p ON sp.id_product = p.id_product" +
+            " INNER JOIN Category c ON p.category_number = c.category_number" +
+            " WHERE e.id_employee = ?" +
+            " GROUP BY c.category_number, c.category_name";
     private static final String SEARCH_EMPLOYEES_SELLING_ALL_CATEGORIES_OF_PRODUCTS =
-            "SELECT e.*\n" +
-            "FROM Employee e" +
-            "WHERE NOT EXISTS (" +
+            "SELECT e.*" +
+            " FROM Employee e" +
+            " WHERE NOT EXISTS (" +
             "    SELECT *" +
             "    FROM Category c" +
             "    WHERE NOT EXISTS (" +
@@ -180,14 +180,14 @@ public class JdbcEmployeeDao implements EmployeeDao {
     }
 
     @Override
-    public Optional<Employee> searchEmployeeBySurname(String surname) {
-        Optional<Employee> employee = Optional.empty();
+    public List<Employee> searchEmployeeBySurname(String surname) {
+        List<Employee> employee = new ArrayList<>();
 
         try (PreparedStatement query = connection.prepareStatement(SEARCH_EMPLOYEES_BY_SURNAME)) {
             query.setString(1, surname);
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
-                employee = Optional.of(extractEmployeeFromResultSet(resultSet));
+                employee.add(extractEmployeeFromResultSet(resultSet));
             }
 
         } catch (SQLException e) {

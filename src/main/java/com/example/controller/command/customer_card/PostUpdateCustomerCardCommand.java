@@ -37,7 +37,7 @@ public class PostUpdateCustomerCardCommand implements Command {
     private Customer_card getUserInput(HttpServletRequest request) {
         return new Customer_card.Builder().setNumber(request.getParameter(Attribute.CARD_NUMBER))
                 .setName(request.getParameter(Attribute.CUST_NAME))
-                .setSurname(request.getParameter(Attribute.SURNAME)).setPatronymic(request.getParameter(Attribute.CUST_PATRONYMIC))
+                .setSurname(request.getParameter(Attribute.CUST_SURNAME)).setPatronymic(request.getParameter(Attribute.CUST_PATRONYMIC))
                 .setPhone(request.getParameter(Attribute.PHONE_NUMBER))
                 .setCity(request.getParameter(Attribute.CITY)).setStreet(request.getParameter(Attribute.STREET))
                 .setZip_code(request.getParameter(Attribute.ZIP_CODE)).setPercent(Long.valueOf(request.getParameter(Attribute.PERCENT)))

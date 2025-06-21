@@ -15,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,20 +31,13 @@ public class SearchEmployeeSumOfVatForEachCategoryCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String employee = request.getParameter(Attribute.EMPLOYEE);
-        List<String> errors = validateUserInput(employee);
+        String ID_EMPLOYEE = request.getParameter(Attribute.ID_EMPLOYEE);
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams;
 
-        if (!errors.isEmpty()) {
-            urlParams = new HashMap<>();
-            urlParams.put(Attribute.ERROR, errors.get(0));
-            RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_EMPLOYEES, urlParams);
-            return RedirectionManager.REDIRECTION;
-        }
 
         List<EmployeeTaxSummaryDto> summaryDtos = employeeService
-                .searchEmployeeSumOfVatForEachCategory(new Employee.Builder().setId(employee).build());
+                .searchEmployeeSumOfVatForEachCategory(new Employee.Builder().setId(ID_EMPLOYEE).build());
 
         if (summaryDtos.isEmpty()) {
             urlParams = new HashMap<>();
@@ -55,14 +47,6 @@ public class SearchEmployeeSumOfVatForEachCategoryCommand implements Command {
         }
 
         request.setAttribute(Attribute.SUMMARY_DTOS, summaryDtos);
-        return Page.ALL_EMPLOYEES_VIEW;
-    }
-
-    private List<String> validateUserInput(String employee) {
-        List<String> errors = new ArrayList<>();
-        if (employee.isEmpty()) {
-            errors.add(Message.INVALID_EMPLOYEE);
-        }
-        return errors;
+        return Page.SUM_VIEW;
     }
 }

@@ -28,7 +28,7 @@ public class JdbcCategoryDao implements CategoryDao {
                             "SELECT * FROM Store_product sp WHERE sp.id_product = p.id_product ))";
 
     private static final String ID = "category_number";
-    private static final String NAME = "Category.category_name";
+    private static final String NAME = "category_name";
 
     private Connection connection;
     private final boolean connectionShouldBeClosed;

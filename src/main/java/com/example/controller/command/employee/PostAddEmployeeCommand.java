@@ -39,9 +39,9 @@ public class PostAddEmployeeCommand implements Command {
 
     private Employee getUserInput(HttpServletRequest request) {
         return new Employee.Builder().setName(request.getParameter(Attribute.EMPLOYEE_NAME))
-                .setSurname(request.getParameter(Attribute.SURNAME)).setPatronymic(request.getParameter(Attribute.SURNAME)).setSalary(BigDecimal.valueOf(Long.parseLong(request.getParameter(Attribute.SALARY))))
+                .setSurname(request.getParameter(Attribute.EMPLOYEE_SURNAME)).setPatronymic(request.getParameter(Attribute.EMPLOYEE_PATRONYMIC)).setSalary(new BigDecimal(request.getParameter(Attribute.SALARY)))
                 .setPhone(request.getParameter(Attribute.PHONE_NUMBER)).setDate_of_birth(LocalDate.parse(request.getParameter(Attribute.DATE_OF_BIRTH)))
-                .setRole(Role.valueOf(request.getParameter(Attribute.ROLE))).setDate_of_start(LocalDate.parse(request.getParameter(Attribute.DATE_OF_START)))
+                .setRole(Role.forValue(request.getParameter(Attribute.ROLE))).setDate_of_start(LocalDate.parse(request.getParameter(Attribute.DATE_OF_START)))
                 .setCity(request.getParameter(Attribute.CITY)).setStreet(request.getParameter(Attribute.STREET))
                 .setZip_code(request.getParameter(Attribute.ZIP_CODE)).build();
     }

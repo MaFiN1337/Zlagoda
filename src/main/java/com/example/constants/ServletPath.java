@@ -5,10 +5,8 @@ public class ServletPath {
     private ServletPath() {
     }
 
-    // Main paths
     public static final String HOME = "/";
 
-    // Manager paths
     public static final String MANAGER_EMPLOYEES = "/manager/employees";
     public static final String MANAGER_CATEGORIES = "/manager/categories";
     public static final String MANAGER_PRODUCTS = "/manager/products";
@@ -16,7 +14,6 @@ public class ServletPath {
     public static final String MANAGER_CHECKS = "/manager/checks";
     public static final String MANAGER_CUSTOMER_CARDS = "/manager/customerCards";
 
-    // Cashier paths
     public static final String CASHIER_PRODUCTS = "/cashier/products";
     public static final String CASHIER_STORE_PRODUCTS = "/cashier/storeProducts";
     public static final String CASHIER_CHECKS = "/cashier/checks";

@@ -15,21 +15,16 @@ import java.util.List;
 public class AllStoreProductCommand implements Command {
 
     private final Store_productService storeProductService;
-    private final ProductService productService;
 
-    public AllStoreProductCommand(Store_productService storeProductService, ProductService productService) {
+    public AllStoreProductCommand(Store_productService storeProductService) {
         this.storeProductService = storeProductService;
-        this.productService = productService;
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Store_product> storeProducts = storeProductService.getAllStore_products();
-        List<Product> products = productService.getAllProducts();
-
         request.setAttribute(Attribute.STORE_PRODUCTS, storeProducts);
-        request.setAttribute(Attribute.PRODUCTS, products);
 
         return Page.ALL_STORE_PRODUCTS_VIEW;
     }

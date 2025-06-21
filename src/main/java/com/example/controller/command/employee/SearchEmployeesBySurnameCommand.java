@@ -43,9 +43,9 @@ public class SearchEmployeesBySurnameCommand implements Command {
             return RedirectionManager.REDIRECTION;
         }
 
-        Optional<Employee> employees = employeeService.searchEmployeesBySurname(surname);
+        List<Employee> employees = employeeService.searchEmployeesBySurname(surname);
 
-        if (!employees.isPresent()) {
+        if (employees.isEmpty()) {
             urlParams = new HashMap<>();
             urlParams.put(Attribute.ERROR, Message.EMPLOYEE_IS_NOT_FOUND);
             RedirectionManager.getInstance().redirectWithParams(httpWrapper, ServletPath.MANAGER_EMPLOYEES, urlParams);

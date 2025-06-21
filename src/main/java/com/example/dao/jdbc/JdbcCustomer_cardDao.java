@@ -112,7 +112,7 @@ public class JdbcCustomer_cardDao implements Customer_cardDao {
             query.setString(1, customer_card.getSurname());
             query.setString(2,  customer_card.getName());
             query.setString(3,  customer_card.getPatronymic());
-            query.setString(4,  customer_card.getNumber());
+            query.setString(4,  customer_card.getPhoneNumber());
             query.setString(5,  customer_card.getCity());
             query.setString(6,  customer_card.getStreet());
             query.setString(7,  customer_card.getZip_code());

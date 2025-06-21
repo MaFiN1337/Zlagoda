@@ -17,11 +17,11 @@ import java.util.Optional;
 public class JdbcCheckDao implements CheckDao {
     private static final Logger LOGGER = LogManager.getLogger(JdbcCheckDao.class);
 
-    private static final String GET_ALL = "SELECT ct.*, empl_name, empl_surname, empl_patronymic, salary, e.phone_number, empl_role, date_of_birth, date_of_start, e.city, e.street, e.zip_code, cust_surname, cust_name, cust_patronymic, cc.phone_number, cc.city, cc.street, cc.zip_code, percent" +
+    private static final String GET_ALL = "SELECT *" +
             "FROM `Check_table` ct" +
-            "INNER JOIN `Employee` e ON e.id_employee = ct.id_employee" +
-            "INNER JOIN `Customer_card` cc ON cc.card_number = ct.card_number" +
-            "ORDER BY check_number";
+            " INNER JOIN `Employee` e ON e.id_employee = ct.id_employee" +
+            " INNER JOIN `Customer_card` cc ON cc.card_number = ct.card_number" +
+            " ORDER BY check_number";
     private static final String GET_BY_ID = "SELECT ct.*, empl_name, empl_surname, empl_patronymic, salary, e.phone_number, empl_role, date_of_birth, date_of_start, e.city, e.street, e.zip_code, cust_surname, cust_name, cust_patronymic, cc.phone_number, cc.city, cc.street, cc.zip_code, percent " +
             "FROM `Check_table` " +
             "INNER JOIN `Employee` e ON e.id_employee = ct.id_employee" +
@@ -38,7 +38,7 @@ public class JdbcCheckDao implements CheckDao {
             "JOIN Product p ON sp.id_product = p.id_product" +
             "JOIN Customer_card cc ON cc.card_number = c.card_number" +
             "JOIN Employee e ON e.id_employee = c.id_employee" +
-            "WHERE c.check_number = ?";
+            " WHERE c.check_number = ?";
     private static final String SEARCH_CHECKS_BY_EMPLOYEE_ID =
             "SELECT c.*, s.product_number, s.selling_price, p.product_name, e.surname, e.phone_number, cc.cust_surname, cc.cust_name" +
             "FROM Check_table c" +
@@ -47,7 +47,7 @@ public class JdbcCheckDao implements CheckDao {
             "JOIN Product p ON sp.id_product = p.id_product" +
             "JOIN Customer_card cc ON cc.card_number = c.card_number" +
             "JOIN Employee e ON e.id_employee = c.id_employee" +
-            "WHERE e.id_employee = ?";
+            " WHERE e.id_employee = ?";
     private static final String SEARCH_CHECKS_BY_EMPLOYEE_SURNAME =
             "SELECT c.*, s.product_number, s.selling_price, p.product_name, e.surname, e.phone_number, cc.cust_surname, cc.cust_name" +
             "FROM Check_table c" +
@@ -56,7 +56,7 @@ public class JdbcCheckDao implements CheckDao {
             "JOIN Product p ON sp.id_product = p.id_product" +
             "JOIN Customer_card cc ON cc.card_number = c.card_number" +
             "JOIN Employee e ON e.id_employee = c.id_employee" +
-            "WHERE e.empl_surname = ?";
+            " WHERE e.empl_surname = ?";
     private static final String SEARCH_CHECKS_BY_EMPLOYEE_ID_PER_PERIOD =
             "SELECT c.*, s.product_number, s.selling_price, p.product_name" +
             "FROM Check_table c" +
@@ -65,7 +65,7 @@ public class JdbcCheckDao implements CheckDao {
             "JOIN Product p ON sp.id_product = p.id_product" +
             "WHERE c.id_employee = ?" +
             "AND c.print_date BETWEEN ? AND ?" +
-            "ORDER BY c.print_date, c.check_number;";
+            " ORDER BY c.print_date, c.check_number;";
     private static final String SEARCH_CHECKS_BY_EMPLOYEE_SURNAME_PER_PERIOD =
             "SELECT c.*, s.product_number, s.selling_price, p.product_name" +
             "FROM Check_table c" +

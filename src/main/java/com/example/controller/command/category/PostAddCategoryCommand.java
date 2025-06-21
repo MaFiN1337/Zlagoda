@@ -36,7 +36,7 @@ public class PostAddCategoryCommand implements Command {
     }
 
     private Category getUserInput(HttpServletRequest request) {
-        return new Category.Builder().setName(request.getParameter(Attribute.CATEGORY_NUMBER)).build();
+        return new Category.Builder().setName(request.getParameter(Attribute.CATEGORY_NAME)).build();
     }
 
 

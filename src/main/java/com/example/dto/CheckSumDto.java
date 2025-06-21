@@ -33,4 +33,5 @@ public class CheckSumDto {
     public void setSum(BigDecimal sum) {
         this.sum = sum;
     }
+
 }

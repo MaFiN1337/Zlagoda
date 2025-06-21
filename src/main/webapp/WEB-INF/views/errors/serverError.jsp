@@ -6,7 +6,7 @@
 <%@ taglib prefix="udt" uri="customtags"%>
 
 <fmt:setLocale value="en_US" scope="session" />
-<fmt:setBundle basename="i18n/messsages" var="rb" />
+<fmt:setBundle basename="i18n/messages" var="rb" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">

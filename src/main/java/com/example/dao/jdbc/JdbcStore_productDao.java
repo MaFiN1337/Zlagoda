@@ -15,10 +15,11 @@ import java.util.Optional;
 public class JdbcStore_productDao implements Store_productDao {
     private static final Logger LOGGER = LogManager.getLogger(JdbcStore_productDao.class);
 
-    private static final String GET_ALL = "SELECT sp.*, p.id_product FROM `Store_product` sp" +
-            "JOIN `Product` p ON sp.id_product = p.id_product" +
-            "ORDER BY product_name";
-    private static final String GET_BY_ID = "SELECT sp.*, p.id_product FROM `Store_product` " +
+    private static final String GET_ALL = "SELECT * FROM `Store_product` sp" +
+            " JOIN `Product` p ON sp.id_product = p.id_product" +
+            " JOIN `Category` c ON c.category_number=p.category_number" +
+            " ORDER BY product_name";
+    private static final String GET_BY_ID = "SELECT sp.*, p.product_name FROM `Store_product` " +
             "JOIN `Product` p ON sp.id_product = p.id_product" +
             "WHERE sp.UPC=?";
     private static final String CREATE =

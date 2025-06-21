@@ -51,6 +51,14 @@ public class FrontController extends HttpServlet {
             throws ServletException, IOException {
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         String commandKey = CommandKeyGenerator.generateCommandKeyFromRequest(request);
+        if (commandKey.equals("GET:manager")){
+            forwardToCommandResultedPage(httpWrapper, "/WEB-INF/views/managerMenu.jsp");
+            return;
+        }
+        if (commandKey.equals("GET:cashier")){
+            forwardToCommandResultedPage(httpWrapper, "/WEB-INF/views/cashierMenu.jsp");
+            return;
+        }
         Command command = CommandFactory.getCommand(commandKey);
         try {
             String commandResultedResource = command.execute(request, response);

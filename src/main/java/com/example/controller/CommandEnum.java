@@ -338,13 +338,13 @@ public enum CommandEnum {
     ALL_STORE_PRODUCTS {
         {
             this.key = "GET:manager/storeProducts";
-            this.command = new AllStoreProductCommand(Store_productService.getInstance(), ProductService.getInstance());
+            this.command = new AllStoreProductCommand(Store_productService.getInstance());
         }
     },
     ALL_STORE_PRODUCTS_CASHIER {
         {
             this.key = "GET:cashier/storeProducts";
-            this.command = new AllStoreProductCommand(Store_productService.getInstance(), ProductService.getInstance());
+            this.command = new AllStoreProductCommand(Store_productService.getInstance());
         }
     },
     DELETE_STORE_PRODUCT {
@@ -379,7 +379,7 @@ public enum CommandEnum {
     },
     SEARCH_CATEGORIES_WITH_ALL_PRODUCTS_IN_STORE_PRODUCT {
         {
-            this.key = "POST:manager/storeProducts/searchCategoriesWithAllProducts";
+            this.key = "GET:manager/categories/searchCategoriesWithAllProducts";
             this.command = new SearchCategoriesWithAllProductsInStoreProductCommand(CategoryService.getInstance());
         }
     },
@@ -540,8 +540,6 @@ public enum CommandEnum {
             this.command = new SearchSumOfChecksPerPeriodCommand(CheckService.getInstance());
         }
     },
-
-    // Additional Customer Cards Commands
     SEARCH_CUSTOMER_CARD_BY_PERCENT_SORTED_BY_SURNAME {
         {
             this.key = "POST:manager/customerCards/searchByPercentSortedBySurname";

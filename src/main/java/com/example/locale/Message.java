@@ -41,7 +41,6 @@ public final class Message {
     public static final String INVALID_PATRONYMIC = "zlagoda.error.invalidPatronymic";
     public static final String INVALID_SALARY = "zlagoda.error.invalidSalary";
     public static final String INVALID_DATE_OF_BIRTH = "zlagoda.error.invalidDateOfBirth";
-    public static final String INVALID_DATE_OF_START = "zlagoda.error.invalidDateOfStart";
     public static final String INVALID_PHONE_NUMBER = "zlagoda.error.invalidPhoneNumber";
     public static final String INVALID_CITY = "zlagoda.error.invalidCity";
     public static final String INVALID_STREET = "zlagoda.error.invalidStreet";

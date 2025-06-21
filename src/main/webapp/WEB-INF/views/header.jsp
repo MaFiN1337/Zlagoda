@@ -5,7 +5,7 @@
 <%@ taglib prefix="udt" uri="customtags"%>
 
 <fmt:setLocale value="en_US" scope="session" />
-<fmt:setBundle basename="i18n/messsages" var="rb" />
+<fmt:setBundle basename="i18n/messages" var="rb" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -73,12 +73,12 @@
     </div>
     <ul class="nav-links">
         <li>
-            <a href="${pageContext.request.contextPath}/controller/products">
+            <a href="${pageContext.request.contextPath}/controller/cashier">
                 <fmt:message key="zlagoda.employee.role.cashier" bundle="${rb}" />
             </a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/controller/products">
+            <a href="${pageContext.request.contextPath}/controller/manager">
                 <fmt:message key="zlagoda.employee.role.manager" bundle="${rb}" />
             </a>
         </li>

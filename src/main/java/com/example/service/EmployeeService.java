@@ -72,7 +72,7 @@ public class EmployeeService {
         }
     }
 
-    public Optional<Employee> searchEmployeesBySurname(String employeeSurname) {
+    public List<Employee> searchEmployeesBySurname(String employeeSurname) {
         LOGGER.info(String.format(SEARCH_EMPLOYEES_BY_SURNAME, employeeSurname));
         try (EmployeeDao employeeDao = daoFactory.createEmployeeDao()) {
             return employeeDao.searchEmployeeBySurname(employeeSurname);

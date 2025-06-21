@@ -15,7 +15,7 @@ public class Customer_cardService {
     private static final Logger LOGGER = LogManager.getLogger(Customer_cardService.class);
 
     static final String GET_ALL_CUSTOMER_CARDS = "Get all customer cards";
-    static final String GET_CUSTOMER_CARD_BY_ID = "Get customer card by id: %s";
+    static final String GET_CUSTOMER_CARD_BY_ID = "Get customer card by number: %s";
     static final String CREATE_CUSTOMER_CARD = "Create customer card: %s";
     static final String UPDATE_CUSTOMER_CARD = "Update customer card: %s";
     static final String DELETE_CUSTOMER_CARD = "Delete customer card: %s";

@@ -29,9 +29,10 @@ public final class Attribute {
     public static final String CITY = "city";
     public static final String STREET = "street";
     public static final String ZIP_CODE = "zip_code";
-    public static final String ROLE = "role";
-    public static final String EMPLOYEE_NAME = "employee_name";
-    public static final String EMPLOYEE_SURNAME = "employee_surname";
+    public static final String ROLE = "empl_role";
+    public static final String EMPLOYEE_NAME = "empl_name";
+    public static final String EMPLOYEE_SURNAME = "empl_surname";
+    public static final String EMPLOYEE_PATRONYMIC = "empl_patronymic";
     public static final String SUMMARY_DTOS = "summary_dtos";
     public static final String CHECKS = "checks";
     public static final String CUSTOMER_CARDS = "customer_cards";

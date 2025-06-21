@@ -3,11 +3,11 @@ package com.example.entity;
 import java.util.Objects;
 
 public class Customer_card {
-    private String number;         // PK
+    private String number;
     private String name;
     private String surname;
     private String patronymic;
-    private String phone;
+    private String phoneNumber;
     private String city;
     private String street;
     private String zip_code;
@@ -43,7 +43,7 @@ public class Customer_card {
         }
 
         public Customer_card.Builder setPhone(String phone) {
-            customer_card.phone = phone;
+            customer_card.phoneNumber = phone;
             return this;
         }
 
@@ -107,12 +107,12 @@ public class Customer_card {
         this.patronymic = patronymic;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getCity() {
@@ -153,7 +153,7 @@ public class Customer_card {
         int result = 1;
         result = prime * result + ((zip_code == null) ? 0 : zip_code.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
         return result;
     }
 
@@ -177,14 +177,14 @@ public class Customer_card {
             return false;
         }
 
-        return (Objects.equals(phone, other.phone));
+        return (Objects.equals(phoneNumber, other.phoneNumber));
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Customer_card [number=").append(number).append(", name=").append(name).append(", surname=").append(surname)
-                .append(", patronymic=").append(patronymic).append(", phone=").append(phone)
+                .append(", patronymic=").append(patronymic).append(", phone=").append(phoneNumber)
                 .append(", city=").append(city).append(", street=")
                 .append(street).append(", zip_code=").append(zip_code)
                 .append(", percent=").append(percent).append("]");

@@ -25,5 +25,6 @@ public final class Page {
     public static final String ADD_UPDATE_CATEGORY_VIEW = PREFIX + "addUpdateCategory" + SUFFIX;
     public static final String ALL_DISCOUNTS_VIEW = PREFIX + "addCustomerCardDiscounts" + SUFFIX;
     public static final String SUM_VIEW = PREFIX + "sumOfChecks" + SUFFIX;
+
     public static final String PAGE_NOT_FOUND = PREFIX + ERROR_PREFIX + "pageNotFound" + SUFFIX;
 }
