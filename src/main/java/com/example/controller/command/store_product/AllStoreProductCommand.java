@@ -26,6 +26,14 @@ public class AllStoreProductCommand implements Command {
         List<Store_product> storeProducts = storeProductService.getAllStore_products();
         request.setAttribute(Attribute.STORE_PRODUCTS, storeProducts);
 
-        return Page.ALL_STORE_PRODUCTS_VIEW;
+        String uri = request.getRequestURI();
+        String afterController = uri.substring(uri.indexOf("/controller/") + "/controller/".length());
+        String firstSegment = afterController.contains("/")
+                ? afterController.substring(0, afterController.indexOf("/"))
+                : afterController;
+        if (firstSegment.equals("manager")){
+            return Page.ALL_STORE_PRODUCTS_VIEW;        }
+        else { return
+                Page.ALL_STORE_PRODUCTS_CASHIER_VIEW ;      }
     }
 }

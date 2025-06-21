@@ -29,9 +29,17 @@ public class AllProductsCommand implements Command {
             throws ServletException, IOException {
         List<Product> products = productService.getAllProducts();
         List<Category> categories = categoryService.getAllCategories();
-
         request.setAttribute(Attribute.PRODUCTS, products);
         request.setAttribute(Attribute.CATEGORIES, categories);
-        return Page.ALL_PRODUCTS_VIEW;
+
+        String uri = request.getRequestURI();
+        String afterController = uri.substring(uri.indexOf("/controller/") + "/controller/".length());
+        String firstSegment = afterController.contains("/")
+                ? afterController.substring(0, afterController.indexOf("/"))
+                : afterController;
+        if (firstSegment.equals("manager")){
+            return Page.ALL_PRODUCTS_VIEW;        }
+        else { return
+                Page.ALL_PRODUCTS_CASHIER_VIEW ;      }
     }
 }

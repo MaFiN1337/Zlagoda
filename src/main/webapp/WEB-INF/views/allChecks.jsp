@@ -124,6 +124,210 @@
 
 </style>
 
+<div class="btn-group">
+
+    <button class="btn"
+            onclick="location.href='${pageContext.request.contextPath}/controller/manager/checks/addCheck';">
+        <fmt:message key="zlagoda.add" bundle="${rb}" />
+    </button>
+
+    <button class="btn" onclick="document.getElementById('modalByEmpId').style.display='block'">
+        <fmt:message key="zlagoda.check.searchByEmployeeId" bundle="${rb}" />
+    </button>
+
+    <button class="btn" onclick="document.getElementById('modalByCheckNumber').style.display='block'">
+        <fmt:message key="zlagoda.check.searchByNumber" bundle="${rb}" />
+    </button>
+
+    <button class="btn" onclick="document.getElementById('modalByEmpIdPeriod').style.display='block'">
+        <fmt:message key="zlagoda.check.searchByEmployeeIdPeriod" bundle="${rb}" />
+    </button>
+
+    <button class="btn" onclick="document.getElementById('modalByEmpSurname').style.display='block'">
+        <fmt:message key="zlagoda.check.searchByEmployeeSurname" bundle="${rb}" />
+    </button>
+
+    <button class="btn" onclick="document.getElementById('modalByEmpSurnamePeriod').style.display='block'">
+        <fmt:message key="zlagoda.check.searchByEmployeeSurnamePeriod" bundle="${rb}" />
+    </button>
+
+    <button class="btn" onclick="document.getElementById('modalChecksPerPeriod').style.display='block'">
+        <fmt:message key="zlagoda.check.searchPerPeriod" bundle="${rb}" />
+    </button>
+
+    <button class="btn" onclick="document.getElementById('modalSumBySurnamePeriod').style.display='block'">
+        <fmt:message key="zlagoda.check.searchSumBySurnamePeriod" bundle="${rb}" />
+    </button>
+
+    <button class="btn" onclick="document.getElementById('modalSumPerPeriod').style.display='block'">
+        <fmt:message key="zlagoda.check.searchSumPerPeriod" bundle="${rb}" />
+    </button>
+
+</div>
+
+
+<div id="modalByEmpId" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('modalByEmpId').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.check.searchByEmployeeId" bundle="${rb}"/></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/checks/searchByEmployeeId" method="POST">
+                <label for="employeeId"><fmt:message key="zlagoda.employee.id" bundle="${rb}"/></label><br>
+                <input type="text" name="employeeId" id="employeeId" style="width: 100%; padding: 8px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit"><fmt:message key="zlagoda.search" bundle="${rb}"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalByCheckNumber" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('modalByCheckNumber').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.check.searchByNumber" bundle="${rb}"/></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/checks/searchByNumber" method="POST">
+                <label for="checkNumber"><fmt:message key="zlagoda.check.number" bundle="${rb}"/></label><br>
+                <input type="text" name="checkNumber" id="checkNumber" style="width: 100%; padding: 8px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit"><fmt:message key="zlagoda.search" bundle="${rb}"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalByEmpIdPeriod" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('modalByEmpIdPeriod').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.check.searchByEmployeeIdPeriod" bundle="${rb}"/></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/checks/searchByEmployeeIdPerPeriod" method="POST">
+                <label><fmt:message key="zlagoda.employee.id" bundle="${rb}"/></label><br>
+                <input type="text" name="employeeId" style="width: 100%; padding: 8px;"><br><br>
+                <label><fmt:message key="zlagoda.date.from" bundle="${rb}"/></label><br>
+                <input type="date" name="fromDate" style="width: 100%; padding: 8px;"><br><br>
+                <label><fmt:message key="zlagoda.date.to" bundle="${rb}"/></label><br>
+                <input type="date" name="toDate" style="width: 100%; padding: 8px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit"><fmt:message key="zlagoda.search" bundle="${rb}"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalByEmpSurname" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('modalByEmpSurname').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.check.searchByEmployeeSurname" bundle="${rb}"/></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/checks/searchByEmployeeSurname" method="POST">
+                <label><fmt:message key="zlagoda.surname" bundle="${rb}"/></label><br>
+                <input type="text" name="surname" style="width: 100%; padding: 8px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit"><fmt:message key="zlagoda.search" bundle="${rb}"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalByEmpSurnamePeriod" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('modalByEmpSurnamePeriod').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.check.searchByEmployeeSurnamePeriod" bundle="${rb}"/></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/checks/searchByEmployeeSurnamePerPeriod" method="POST">
+                <label><fmt:message key="zlagoda.surname" bundle="${rb}"/></label><br>
+                <input type="text" name="surname" style="width: 100%; padding: 8px;"><br><br>
+                <label><fmt:message key="zlagoda.date.from" bundle="${rb}"/></label><br>
+                <input type="date" name="fromDate" style="width: 100%; padding: 8px;"><br><br>
+                <label><fmt:message key="zlagoda.date.to" bundle="${rb}"/></label><br>
+                <input type="date" name="toDate" style="width: 100%; padding: 8px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit"><fmt:message key="zlagoda.search" bundle="${rb}"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalChecksPerPeriod" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('modalChecksPerPeriod').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.check.searchPerPeriod" bundle="${rb}"/></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/checks/searchPerPeriod" method="POST">
+                <label><fmt:message key="zlagoda.date.from" bundle="${rb}"/></label><br>
+                <input type="date" name="fromDate" style="width: 100%; padding: 8px;"><br><br>
+                <label><fmt:message key="zlagoda.date.to" bundle="${rb}"/></label><br>
+                <input type="date" name="toDate" style="width: 100%; padding: 8px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit"><fmt:message key="zlagoda.search" bundle="${rb}"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalSumBySurnamePeriod" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('modalSumBySurnamePeriod').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.check.searchSumBySurnamePeriod" bundle="${rb}"/></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/checks/searchSumByEmployeeSurnamePerPeriod" method="POST">
+                <label><fmt:message key="zlagoda.surname" bundle="${rb}"/></label><br>
+                <input type="text" name="surname" style="width: 100%; padding: 8px;"><br><br>
+                <label><fmt:message key="zlagoda.date.from" bundle="${rb}"/></label><br>
+                <input type="date" name="fromDate" style="width: 100%; padding: 8px;"><br><br>
+                <label><fmt:message key="zlagoda.date.to" bundle="${rb}"/></label><br>
+                <input type="date" name="toDate" style="width: 100%; padding: 8px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit"><fmt:message key="zlagoda.search" bundle="${rb}"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalSumPerPeriod" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('modalSumPerPeriod').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.check.searchSumPerPeriod" bundle="${rb}"/></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/checks/searchSumPerPeriod" method="POST">
+                <label><fmt:message key="zlagoda.date.from" bundle="${rb}"/></label><br>
+                <input type="date" name="fromDate" style="width: 100%; padding: 8px;"><br><br>
+                <label><fmt:message key="zlagoda.date.to" bundle="${rb}"/></label><br>
+                <input type="date" name="toDate" style="width: 100%; padding: 8px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit"><fmt:message key="zlagoda.search" bundle="${rb}"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 <div style="text-align: left; margin-bottom: 15px;">
     <form action="${pageContext.request.contextPath}/controller/manager" method="get">
         <button type="submit"
@@ -159,7 +363,6 @@
         <th><fmt:message key="zlagoda.vat" bundle="${rb}" /></th>
         <th><fmt:message key="zlagoda.employee" bundle="${rb}" /></th>
         <th><fmt:message key="zlagoda.customer_card" bundle="${rb}" /></th>
-        <th>Methods</th>
 
     </tr>
     </thead>
@@ -172,15 +375,6 @@
             <td>${check.getVat()}</td>
             <td>${check.getEmployee().getSurname()}</td>
             <td>${check.getCustomer_card().getSurname()}</td>
-            <td>
-                <a href="./checks/updateCheck?check_number=${check.getNumber()}">
-                    <fmt:message key="zlagoda.update" bundle="${rb}" />
-                </a>
-                <br>
-                <a href="./checks/deleteCheck?check_number=${check.getNumber()}">
-                    <fmt:message key="zlagoda.delete" bundle="${rb}" />
-                </a>
-            </td>
         </tr>
     </c:forEach>
     </tbody>

@@ -15,25 +15,6 @@
         color: #2c3e50;
     }
 
-    .btn-group {
-        margin: 20px;
-        text-align: left;
-    }
-
-    .btn {
-        padding: 8px 16px;
-        margin-right: 10px;
-        background-color: #2c3e50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .btn:hover {
-        background-color: #34495e;
-    }
-
     .alert {
         width: 50%;
         margin: 10px auto;
@@ -123,6 +104,135 @@
     }
 
 </style>
+
+<style>
+
+    .btn {
+        padding: 10px 18px;
+        background-color: #2c3e50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:hover {
+        background-color: #1a252f;
+        transform: translateY(-1px);
+    }
+
+    .btn:active {
+        background-color: #34495e;
+        transform: translateY(0);
+    }
+
+    .btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.4);
+    }
+</style>
+
+
+<button class="btn"
+        onclick="location.href='${pageContext.request.contextPath}/controller/manager/storeProducts/addStoreProduct';">
+    <fmt:message key="zlagoda.add" bundle="${rb}" />
+</button>
+
+<button class="btn" onclick="document.getElementById('searchAmountPerPeriod').style.display='block'">
+    <fmt:message key="zlagoda.store.amountPerPeriod" bundle="${rb}" />
+</button>
+<div id="searchAmountPerPeriod" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('searchAmountPerPeriod').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.store.amountPerPeriod" bundle="${rb}" /></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/storeProducts/searchAmountPerPeriod" method="POST">
+                <label><fmt:message key="zlagoda.date.start" bundle="${rb}" /></label><br>
+                <input type="date" name="start_date" required><br><br>
+                <label><fmt:message key="zlagoda.date.end" bundle="${rb}" /></label><br>
+                <input type="date" name="end_date" required><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit">
+                        <fmt:message key="zlagoda.search" bundle="${rb}" />
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- SEARCH_NON_PROMO_STORE_PRODUCTS_SORTED_BY_NAME -->
+<form action="${pageContext.request.contextPath}/controller/manager/storeProducts/searchNonPromoByName" method="POST">
+    <button class="btn" type="submit">
+        <fmt:message key="zlagoda.store.nonPromoSortedByName" bundle="${rb}" />
+    </button>
+</form>
+
+<!-- SEARCH_NON_PROMO_STORE_PRODUCTS_SORTED_BY_PRODUCT_NUM -->
+<form action="${pageContext.request.contextPath}/controller/manager/storeProducts/searchNonPromoByProductNum" method="POST">
+    <button class="btn" type="submit">
+        <fmt:message key="zlagoda.store.nonPromoSortedByProductNum" bundle="${rb}" />
+    </button>
+</form>
+
+<!-- SEARCH_PROMO_STORE_PRODUCTS_SORTED_BY_NAME -->
+<form action="${pageContext.request.contextPath}/controller/manager/storeProducts/searchPromoByName" method="POST">
+    <button class="btn" type="submit">
+        <fmt:message key="zlagoda.store.promoSortedByName" bundle="${rb}" />
+    </button>
+</form>
+
+<!-- SEARCH_PROMO_STORE_PRODUCTS_SORTED_BY_PRODUCT_NUM -->
+<form action="${pageContext.request.contextPath}/controller/manager/storeProducts/searchPromoByProductNum" method="POST">
+    <button class="btn" type="submit">
+        <fmt:message key="zlagoda.store.promoSortedByProductNum" bundle="${rb}" />
+    </button>
+</form>
+
+<!-- SEARCH_STORE_PRODUCT_DETAILS_BY_UPC -->
+<button class="btn" onclick="document.getElementById('searchStoreProductByUpc').style.display='block'">
+    <fmt:message key="zlagoda.store.detailsByUpc" bundle="${rb}" />
+</button>
+<div id="searchStoreProductByUpc" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('searchStoreProductByUpc').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.store.detailsByUpc" bundle="${rb}" /></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/storeProducts/searchDetailsByUpc" method="POST">
+                <label for="upc"><fmt:message key="zlagoda.store.upc" bundle="${rb}" /></label><br>
+                <input type="text" name="upc" id="upc" required style="width: 100%; padding: 8px; margin-top: 5px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit">
+                        <fmt:message key="zlagoda.search" bundle="${rb}" />
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- SEARCH_STORE_PRODUCTS_SORTED_BY_NAME -->
+<form action="${pageContext.request.contextPath}/controller/manager/storeProducts/searchSortedByName" method="POST">
+    <button class="btn" type="submit">
+        <fmt:message key="zlagoda.store.sortedByName" bundle="${rb}" />
+    </button>
+</form>
+
+<!-- SEARCH_STORE_PRODUCTS_SORTED_BY_PRODUCTS_NUM -->
+<form action="${pageContext.request.contextPath}/controller/manager/storeProducts/searchSortedByProductsNum" method="POST">
+    <button class="btn" type="submit">
+        <fmt:message key="zlagoda.store.sortedByProductNum" bundle="${rb}" />
+    </button>
+</form>
+
 
 <div style="text-align: left; margin-bottom: 15px;">
     <form action="${pageContext.request.contextPath}/controller/manager" method="get">

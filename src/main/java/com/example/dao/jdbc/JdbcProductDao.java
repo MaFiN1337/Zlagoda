@@ -24,9 +24,7 @@ public class JdbcProductDao implements ProductDao {
     private static final String CREATE = "INSERT INTO `Product` (product_name, category_number, characteristics) VALUES (?, ?, ?)";
     private static final String UPDATE = "UPDATE `Product` SET product_name=? WHERE id_product=?";
     private static final String DELETE = "DELETE FROM `Store_product`WHERE id_product = ?; DELETE FROM `Product` WHERE id_product=?";
-    private static final String SEARCH_PRODUCT_BY_NAME = "SELECT pr.*, cat.category_name FROM `Product` pr" +
-            "INNER JOIN `Category`cat ON pr.category_number=cat.category_number" +
-            "WHERE LOWER(product_name) LIKE CONCAT('%', LOWER(?), '%')";
+    private static final String SEARCH_PRODUCT_BY_NAME = "SELECT * FROM `Product` pr INNER JOIN `Category` c ON pr.category_number=c.category_number WHERE LOWER(pr.product_name) LIKE CONCAT('%', LOWER(?), '%')";
     private static final String SEARCH_PRODUCT_BY_NAME_AND_SORTED = "SELECT pr.*, cat.category_name FROM `Product` " +
             "INNER JOIN `Category`cat ON pr.category_number=cat.category_number" +
             "WHERE LOWER(product_name) LIKE CONCAT('%', LOWER(?), '%') ORDER BY product_name";

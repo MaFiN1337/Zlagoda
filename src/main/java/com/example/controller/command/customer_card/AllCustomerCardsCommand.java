@@ -24,8 +24,15 @@ public class AllCustomerCardsCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Customer_card> customer_cards = customerCardService.getAllCustomer_cards();
-
+        String uri = request.getRequestURI();
+        String afterController = uri.substring(uri.indexOf("/controller/") + "/controller/".length());
+        String firstSegment = afterController.contains("/")
+                ? afterController.substring(0, afterController.indexOf("/"))
+                : afterController;
         request.setAttribute(Attribute.CUSTOMER_CARDS, customer_cards);
-        return Page.ALL_CUSTOMER_CARDS_VIEW;
+        if (firstSegment.equals("manager")){
+            return Page.ALL_CUSTOMER_CARDS_VIEW;        }
+        else { return
+                    Page.ALL_CUSTOMER_CARDS_CASHIER_VIEW ;      }
     }
 }

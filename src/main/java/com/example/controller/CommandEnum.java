@@ -143,6 +143,12 @@ public enum CommandEnum {
             this.command = new AllChecksCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
         }
     },
+    ALL_CHECKS_CASHIER {
+        {
+            this.key = "GET:cashier/checks";
+            this.command = new AllChecksCommand(CheckService.getInstance(), Customer_cardService.getInstance(), EmployeeService.getInstance());
+        }
+    },
     DELETE_CHECK {
         {
             this.key = "GET:manager/checks/deleteCheck";
@@ -299,42 +305,41 @@ public enum CommandEnum {
     },
     SEARCH_PRODUCTS_BY_CATEGORY_AND_SORT_BY_NAME {
         {
-            this.key = "POST:manager/products/searchByCategory";
+            this.key = "GET:manager/products/searchByCategory";
             this.command = new SearchProductsByCategoryAndSortByNameCommand(ProductService.getInstance(), CategoryService.getInstance());
         }
     },
     SEARCH_PRODUCTS_BY_CATEGORY_AND_SORT_BY_NAME_CASHIER {
         {
-            this.key = "POST:cashier/products/searchByCategory";
+            this.key = "GET:cashier/products/searchByCategory";
             this.command = new SearchProductsByCategoryAndSortByNameCommand(ProductService.getInstance(), CategoryService.getInstance());
         }
     },
     SEARCH_PRODUCTS_BY_NAME_AND_SORT {
         {
-            this.key = "POST:manager/products/searchByName";
+            this.key = "GET:manager/products/searchByNameAndSort";
             this.command = new SearchProductsByNameAndSortCommand(ProductService.getInstance(), CategoryService.getInstance());
         }
     },
     SEARCH_PRODUCTS_BY_NAME_AND_SORT_CASHIER {
         {
-            this.key = "POST:cashier/products/searchByName";
+            this.key = "GET:cashier/products/searchByNameCashier";
             this.command = new SearchProductsByNameAndSortCommand(ProductService.getInstance(), CategoryService.getInstance());
         }
     },
     SEARCH_PRODUCTS_BY_NAME {
         {
-            this.key = "POST:manager/products/searchByNameOnly";
+            this.key = "GET:manager/products/searchByName";
             this.command = new SearchProductsByNameCommand(ProductService.getInstance(), CategoryService.getInstance());
         }
     },
     SEARCH_PRODUCTS_BY_NAME_CASHIER {
         {
-            this.key = "POST:cashier/products/searchByNameOnly";
+            this.key = "GET:cashier/products/searchByNameCashier";
             this.command = new SearchProductsByNameCommand(ProductService.getInstance(), CategoryService.getInstance());
         }
     },
 
-    // Store Products Commands
     ALL_STORE_PRODUCTS {
         {
             this.key = "GET:manager/storeProducts";
@@ -556,12 +561,6 @@ public enum CommandEnum {
         {
             this.key = "POST:cashier/customerCards/searchBySurname";
             this.command = new SearchCustomerCardBySurnameCommand(Customer_cardService.getInstance());
-        }
-    },
-    SEARCH_CUSTOMER_CARD_DISCOUNT_FOR_EACH_CATEGORY {
-        {
-            this.key = "POST:manager/customerCards/searchDiscountForEachCategory";
-            this.command = new SearchCustomerCardDiscountForEachCategoryCommand(Customer_cardService.getInstance());
         }
     };
 

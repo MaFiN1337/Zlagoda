@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.dao.jdbc.JdbcCustomer_cardDao.extractCustomer_cardFromResultSet;
+import static com.example.dao.jdbc.JdbcEmployeeDao.extractEmployeeFromResultSet;
+
+
 public class JdbcCheckDao implements CheckDao {
     private static final Logger LOGGER = LogManager.getLogger(JdbcCheckDao.class);
 
@@ -25,80 +29,80 @@ public class JdbcCheckDao implements CheckDao {
     private static final String GET_BY_ID = "SELECT ct.*, empl_name, empl_surname, empl_patronymic, salary, e.phone_number, empl_role, date_of_birth, date_of_start, e.city, e.street, e.zip_code, cust_surname, cust_name, cust_patronymic, cc.phone_number, cc.city, cc.street, cc.zip_code, percent " +
             "FROM `Check_table` " +
             "INNER JOIN `Employee` e ON e.id_employee = ct.id_employee" +
-            "INNER JOIN `Customer_card` cc ON cc.card_number = ct.card_number" +
-            "WHERE check_number=?";
+            " INNER JOIN `Customer_card` cc ON cc.card_number = ct.card_number" +
+            " WHERE check_number=?";
     private static final String CREATE = "INSERT INTO `Check_table` (check_number, print_date, sum_total, vat, id_employee, card_number) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE `Check_table` SET print_date=? WHERE check_number=?";
     private static final String DELETE = "DELETE FROM `Check_table` WHERE check_number=?";
     private static final String SEARCH_CHECK_BY_NUMBER =
             "SELECT c.*, s.product_number, s.selling_price, p.product_name, e.surname, e.phone_number, cc.cust_surname, cc.cust_name" +
-            "FROM Check_table c" +
-            "JOIN Sale s ON c.check_number = s.check_number" +
-            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
-            "JOIN Product p ON sp.id_product = p.id_product" +
-            "JOIN Customer_card cc ON cc.card_number = c.card_number" +
-            "JOIN Employee e ON e.id_employee = c.id_employee" +
+            " FROM Check_table c" +
+            " JOIN Sale s ON c.check_number = s.check_number" +
+            " JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            "  Product p ON sp.id_product = p.id_product" +
+            " JOIN Customer_card cc ON cc.card_number = c.card_number" +
+            " JOIN Employee e ON e.id_employee = c.id_employee" +
             " WHERE c.check_number = ?";
     private static final String SEARCH_CHECKS_BY_EMPLOYEE_ID =
-            "SELECT c.*, s.product_number, s.selling_price, p.product_name, e.surname, e.phone_number, cc.cust_surname, cc.cust_name" +
-            "FROM Check_table c" +
-            "JOIN Sale s ON c.check_number = s.check_number" +
-            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
-            "JOIN Product p ON sp.id_product = p.id_product" +
-            "JOIN Customer_card cc ON cc.card_number = c.card_number" +
-            "JOIN Employee e ON e.id_employee = c.id_employee" +
+            "SELECT c.*, s.product_number, s.selling_price, p.product_name, e.empl_surname, e.phone_number, cc.cust_surname, cc.cust_name" +
+            " FROM Check_table c" +
+            " JOIN Sale s ON c.check_number = s.check_number" +
+            " JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            " JOIN Product p ON sp.id_product = p.id_product" +
+            " JOIN Customer_card cc ON cc.card_number = c.card_number" +
+            " JOIN Employee e ON e.id_employee = c.id_employee" +
             " WHERE e.id_employee = ?";
     private static final String SEARCH_CHECKS_BY_EMPLOYEE_SURNAME =
             "SELECT c.*, s.product_number, s.selling_price, p.product_name, e.surname, e.phone_number, cc.cust_surname, cc.cust_name" +
-            "FROM Check_table c" +
-            "JOIN Sale s ON c.check_number = s.check_number" +
-            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
-            "JOIN Product p ON sp.id_product = p.id_product" +
-            "JOIN Customer_card cc ON cc.card_number = c.card_number" +
-            "JOIN Employee e ON e.id_employee = c.id_employee" +
+            " FROM Check_table c" +
+            " JOIN Sale s ON c.check_number = s.check_number" +
+            " JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            " JOIN Product p ON sp.id_product = p.id_product" +
+            " JOIN Customer_card cc ON cc.card_number = c.card_number" +
+            " JOIN Employee e ON e.id_employee = c.id_employee" +
             " WHERE e.empl_surname = ?";
     private static final String SEARCH_CHECKS_BY_EMPLOYEE_ID_PER_PERIOD =
             "SELECT c.*, s.product_number, s.selling_price, p.product_name" +
-            "FROM Check_table c" +
-            "JOIN Sale s ON c.check_number = s.check_number" +
-            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
-            "JOIN Product p ON sp.id_product = p.id_product" +
-            "WHERE c.id_employee = ?" +
+            " FROM Check_table c" +
+            " JOIN Sale s ON c.check_number = s.check_number" +
+            " JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            " JOIN Product p ON sp.id_product = p.id_product" +
+            " WHERE c.id_employee = ?" +
             "AND c.print_date BETWEEN ? AND ?" +
             " ORDER BY c.print_date, c.check_number;";
     private static final String SEARCH_CHECKS_BY_EMPLOYEE_SURNAME_PER_PERIOD =
             "SELECT c.*, s.product_number, s.selling_price, p.product_name" +
-            "FROM Check_table c" +
-            "JOIN Sale s ON c.check_number = s.check_number" +
-            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
-            "JOIN Product p ON sp.id_product = p.id_product" +
-            "WHERE c.empl_surname = ?" +
-            "AND c.print_date BETWEEN ? AND ?" +
-            "ORDER BY c.print_date, c.check_number;";
+            " FROM Check_table c" +
+            " JOIN Sale s ON c.check_number = s.check_number" +
+            " JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            " JOIN Product p ON sp.id_product = p.id_product" +
+            " WHERE c.empl_surname = ?" +
+            " AND c.print_date BETWEEN ? AND ?" +
+            " ORDER BY c.print_date, c.check_number;";
     private static final String SEARCH_CHECKS_PER_PERIOD =
             "SELECT c.*, s.product_number, s.selling_price, p.product_name" +
-            "FROM Check_table c" +
-            "JOIN Sale s ON c.check_number = s.check_number" +
-            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
-            "JOIN Product p ON sp.id_product = p.id_product" +
-            "WHERE c.print_date BETWEEN ? AND ?" +
+            " FROM Check_table c" +
+            " JOIN Sale s ON c.check_number = s.check_number" +
+            " JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            " JOIN Product p ON sp.id_product = p.id_product" +
+            " WHERE c.print_date BETWEEN ? AND ?" +
             "ORDER BY c.print_date, c.check_number;";
     private static final String SEARCH_SUM_OF_CHECKS_BY_EMPLOYEE_SURNAME_PER_PERIOD =
             "SELECT SUM(c.sum_total) as total" +
-            "FROM Check_table c" +
-            "WHERE c.empl_surname = ?" +
+            " FROM Check_table c" +
+            " WHERE c.empl_surname = ?" +
             "AND c.print_date BETWEEN ? AND ?";
     private static final String SEARCH_SUM_OF_CHECKS_PER_PERIOD =
             "SELECT SUM(c.sum_total) as total" +
-            "FROM Check_table c" +
-            "WHERE c.print_date BETWEEN ? AND ?";
+            " FROM Check_table c" +
+            " WHERE c.print_date BETWEEN ? AND ?";
     private static final String SEARCH_AMOUNT_OF_STORE_PRODUCT_PER_PERIOD =
             "SELECT SUM(s.product_number) as total" +
-            "FROM Sale s" +
-            "JOIN Check_table c ON s.check_number = c.check_number" +
-            "JOIN Store_Product sp ON s.UPC = sp.UPC" +
-            "JOIN Product p ON sp.id_product = p.id_product" +
-            "WHERE p.product_name = ?" +
+            " FROM Sale s" +
+            " JOIN Check_table c ON s.check_number = c.check_number" +
+            " JOIN Store_Product sp ON s.UPC = sp.UPC" +
+            " JOIN Product p ON sp.id_product = p.id_product" +
+            " WHERE p.product_name = ?" +
             "AND c.print_date BETWEEN ? AND ?";
 
     private static final String ID = "check_number";
@@ -381,8 +385,8 @@ public class JdbcCheckDao implements CheckDao {
     protected static Check extractCheckFromResultSet(ResultSet resultSet) throws SQLException {
         return new Check.Builder().setNumber(resultSet.getString(ID)).setPrint_date(resultSet.getTimestamp(PRINT_DATE).toLocalDateTime())
                 .setSum_total(resultSet.getBigDecimal(SUM_TOTAL)).setVat(resultSet.getBigDecimal(VAT))
-                .setCustomer_card(JdbcCustomer_cardDao.extractCustomer_cardFromResultSet(resultSet))
-                .setEmployee(JdbcEmployeeDao.extractEmployeeFromResultSet(resultSet)).build();
+                .setCustomer_card(extractCustomer_cardFromResultSet(resultSet))
+                .setEmployee(extractEmployeeFromResultSet(resultSet)).build();
     }
 
     protected static CheckSumDto extractSumFromResultSet(ResultSet resultSet) throws SQLException {

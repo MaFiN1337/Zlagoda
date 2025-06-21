@@ -23,8 +23,14 @@ public final class Page {
     public static final String ADD_UPDATE_CUSTOMER_CARD_VIEW = PREFIX + "addUpdateCustomerCard" + SUFFIX;
     public static final String ALL_CATEGORIES_VIEW = PREFIX + "allCategories" + SUFFIX;
     public static final String ADD_UPDATE_CATEGORY_VIEW = PREFIX + "addUpdateCategory" + SUFFIX;
-    public static final String ALL_DISCOUNTS_VIEW = PREFIX + "addCustomerCardDiscounts" + SUFFIX;
     public static final String SUM_VIEW = PREFIX + "sumOfChecks" + SUFFIX;
 
     public static final String PAGE_NOT_FOUND = PREFIX + ERROR_PREFIX + "pageNotFound" + SUFFIX;
+    public static final String ALL_CUSTOMER_CARDS_CASHIER_VIEW = PREFIX + "allCustomerCardsCashier" + SUFFIX;
+    public static final String ALL_STORE_PRODUCTS_CASHIER_VIEW = PREFIX + "allStoreProductsCashier" + SUFFIX;
+    public static final String ALL_PRODUCTS_CASHIER_VIEW = PREFIX + "allProductsCashier" + SUFFIX;
+    public static final String ALL_CHECKS_CASHIER_VIEW = PREFIX + "allChecksCashier" + SUFFIX;
+
+
+
 }

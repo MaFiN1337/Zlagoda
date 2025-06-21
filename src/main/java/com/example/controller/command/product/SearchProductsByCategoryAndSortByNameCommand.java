@@ -34,8 +34,8 @@ public class SearchProductsByCategoryAndSortByNameCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String category = request.getParameter(Attribute.CATEGORY);
-        List<String> errors = validateUserInput(category);
+        String category_name = request.getParameter(Attribute.CATEGORY_NAME);
+        List<String> errors = validateUserInput(category_name);
         HttpWrapper httpWrapper = new HttpWrapper(request, response);
         Map<String, String> urlParams;
         String uri = request.getRequestURI();
@@ -57,7 +57,7 @@ public class SearchProductsByCategoryAndSortByNameCommand implements Command {
             return RedirectionManager.REDIRECTION;
         }
 
-        List<Product> products = productService.searchProductsByCategoryAndSortByName(category);
+        List<Product> products = productService.searchProductsByCategoryAndSortByName(category_name);
 
         if (products.isEmpty()) {
             urlParams = new HashMap<>();

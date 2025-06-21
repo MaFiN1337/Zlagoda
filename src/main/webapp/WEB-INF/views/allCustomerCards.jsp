@@ -158,14 +158,65 @@
 
 </style>
 
-    <form action="${pageContext.request.contextPath}/controller/manager/customerCards/searchDiscountForEachCategory"
-          method="POST" class="form-inline">
-        <button class="btn" type="submit">
-            <fmt:message key="zlagoda.customerCard.searchDiscountForEachCategory" bundle="${rb}" />
-        </button>
-    </form>
+<button class="btn" onclick="document.getElementById('searchCustomerCardSurname').style.display='block'">
+    <fmt:message key="zlagoda.card.searchBySurname" bundle="${rb}" />
+</button>
 
-    <div class="container-fluid">
+<button class="btn"
+        onclick="location.href='${pageContext.request.contextPath}/controller/manager/customerCards/addCustomerCard';">
+    <fmt:message key="zlagoda.add" bundle="${rb}" />
+</button>
+<button class="btn" onclick="document.getElementById('searchCardDiscountCategory').style.display='block'">
+    <fmt:message key="zlagoda.card.discountForEachCategory" bundle="${rb}" />
+</button>
+
+<div id="searchCustomerCardSurname" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('searchCustomerCardSurname').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.card.searchBySurname" bundle="${rb}" /></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/customerCards/searchBySurname" method="POST">
+                <label for="cust_surname">
+                    <fmt:message key="zlagoda.customer.surname" bundle="${rb}" />
+                </label><br>
+                <input type="text" name="cust_surname" id="cust_surname" style="width: 100%; padding: 8px; margin-top: 5px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit">
+                        <fmt:message key="zlagoda.search" bundle="${rb}" />
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="searchCardDiscountCategory" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('searchCardDiscountCategory').style.display='none'">&times;</span>
+            <h4><fmt:message key="zlagoda.card.discountForEachCategory" bundle="${rb}" /></h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/customerCards/searchDiscountForEachCategory" method="POST">
+                <label for="card_number">
+                    <fmt:message key="zlagoda.card.number" bundle="${rb}" />
+                </label><br>
+                <input type="text" name="card_number" id="card_number" style="width: 100%; padding: 8px; margin-top: 5px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit">
+                        <fmt:message key="zlagoda.search" bundle="${rb}" />
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
         <div class="back-btn-container">
             <form action="${pageContext.request.contextPath}/controller/manager" method="get">
                 <button type="submit" class="back-btn">Back to manager menu</button>

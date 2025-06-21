@@ -36,6 +36,14 @@ public class AllChecksCommand implements Command {
         request.setAttribute(Attribute.CHECKS, checks);
         request.setAttribute(Attribute.EMPLOYEES, employees);
 
-        return Page.ALL_CHECKS_VIEW;
+        String uri = request.getRequestURI();
+        String afterController = uri.substring(uri.indexOf("/controller/") + "/controller/".length());
+        String firstSegment = afterController.contains("/")
+                ? afterController.substring(0, afterController.indexOf("/"))
+                : afterController;
+        if (firstSegment.equals("manager")){
+            return Page.ALL_CHECKS_VIEW;        }
+        else { return
+                Page.ALL_CHECKS_CASHIER_VIEW ;      }
     }
 }

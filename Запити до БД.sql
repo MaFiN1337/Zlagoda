@@ -21,22 +21,22 @@ WHERE NOT EXISTS (
 )
 
 
--- 2. Запит на групування параметричний (застосувати в JdbcCustomer_cardDao)        !! WAS TESTED !!  !!  WAS CODED  !!
--- Умова: Для обраної карти клієнта, для кожної категорії обрахувати суму знижки, яка була зроблена у всіх чеках.
--- Запит:
-
-SELECT
-    c.category_number,
-    c.category_name,
-    COALESCE(SUM(sa.selling_price / (100 - cc.percent) * cc.percent), 0) AS total_discount
-FROM Category c
-         LEFT JOIN Product p ON c.category_number = p.category_number
-         LEFT JOIN Store_product sp ON p.id_product = sp.id_product
-         LEFT JOIN Sale sa ON sp.UPC = sa.UPC
-         LEFT JOIN Check_table ct ON sa.check_number = ct.check_number
-         LEFT JOIN Customer_Card cc ON ct.card_number = cc.card_number AND cc.card_number = ?
-GROUP BY c.category_number, c.category_name
-ORDER BY c.category_number;
+-- -- 2. Запит на групування параметричний (застосувати в JdbcCustomer_cardDao)        !! WAS TESTED !!  !!  WAS CODED  !!
+-- -- Умова: Для обраної карти клієнта, для кожної категорії обрахувати суму знижки, яка була зроблена у всіх чеках.
+-- -- Запит:
+--
+-- SELECT
+--     c.category_number,
+--     c.category_name,
+--     COALESCE(SUM(sa.selling_price / (100 - cc.percent) * cc.percent), 0) AS total_discount
+-- FROM Category c
+--          LEFT JOIN Product p ON c.category_number = p.category_number
+--          LEFT JOIN Store_product sp ON p.id_product = sp.id_product
+--          LEFT JOIN Sale sa ON sp.UPC = sa.UPC
+--          LEFT JOIN Check_table ct ON sa.check_number = ct.check_number
+--          LEFT JOIN Customer_Card cc ON ct.card_number = cc.card_number AND cc.card_number = ?
+-- GROUP BY c.category_number, c.category_name
+-- ORDER BY c.category_number;
 
 -- 3.Запит на подвійне заперечення  (застосувати в JdbcCategoryDao)   !! WAS TESTED !!  !!  WAS CODED  !!
 -- Умова: Знайти категорії, усі продукти яких є в магазині.

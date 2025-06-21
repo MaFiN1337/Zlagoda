@@ -124,6 +124,59 @@
 
 </style>
 
+<div class="btn-group">
+    <button class="btn" onclick="document.getElementById('modalSearchByCategoryManager').style.display='block'">
+        Search Products by Category
+    </button>
+
+    <button class="btn" onclick="document.getElementById('modalSearchByNameManager').style.display='block'">
+        Search Products by Name
+    </button>
+
+    <button class="btn"
+            onclick="location.href='${pageContext.request.contextPath}/controller/manager/products/addProduct';">
+        <fmt:message key="zlagoda.add" bundle="${rb}" />
+    </button>
+
+</div>
+
+<div id="modalSearchByCategoryManager" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('modalSearchByCategoryManager').style.display='none'">&times;</span>
+            <h4>Search Products by Category </h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/products/searchByCategory" method="POST">
+                <label for="category_name">Category Name:</label><br>
+                <input type="text" name="category_name" id="category_name" style="width: 100%; padding: 8px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalSearchByNameManager" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="document.getElementById('modalSearchByNameManager').style.display='none'">&times;</span>
+            <h4>Search Products by Name</h4>
+        </div>
+        <div class="modal-body">
+            <form action="${pageContext.request.contextPath}/controller/manager/products/searchByName" method="POST">
+                <label for="product_name">Product Name:</label><br>
+                <input type="text" name="product_name" id="product_name" style="width: 100%; padding: 8px;"><br><br>
+                <div class="modal-footer">
+                    <button class="btn" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <div style="text-align: left; margin-bottom: 15px;">
     <form action="${pageContext.request.contextPath}/controller/manager" method="get">
         <button type="submit"
@@ -182,5 +235,17 @@
     </c:forEach>
     </tbody>
 </table>
+
+<script>
+    window.onclick = function(event) {
+        const modals = document.getElementsByClassName("modal");
+        for (let i = 0; i < modals.length; i++) {
+            if (event.target === modals[i]) {
+                modals[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
 
 <%@include file="footer.jsp"%>
